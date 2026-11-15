@@ -3,6 +3,11 @@
 import asyncio
 import logging
 import time
+from contextvars import ContextVar
+from dataclasses import replace
+
+# Inherited by delayed RF tasks; a stop invalidates work even after a later start.
+current_peer_guard = ContextVar("private_peer_guard", default=None)
 
 from .adapter import Adapter, Config, decode_packet, supported_peer_packet
 
@@ -67,6 +72,9 @@ class DaemonBinding:
         self.peer_pending = 0
         self.dropped = 0
         self.closed = False
+        self.paused = False
+        self.generation = 0
+        self.peer_packets = set()
         self.service = None
         self.owned_replay = None
         self.adapter = Adapter(
@@ -76,7 +84,7 @@ class DaemonBinding:
     def on_hardware_rx(self, raw, rssi, snr, *, rx_radio_id=None):
         # The original dispatcher continues processing exactly once. This tee does
         # not await database, TLS, or a second RF planner invocation.
-        if self.closed or rx_radio_id is None:
+        if self.closed or self.paused or rx_radio_id is None:
             return
         if len(self.tasks) >= self.limit:
             self.dropped += 1
@@ -93,7 +101,7 @@ class DaemonBinding:
     async def _route(self, request):
         if request.origin == "hardware":
             return None  # Original dispatcher owns normal RF processing.
-        if self.closed or request.origin != "peer" or self.peer_pending >= self.limit:
+        if self.closed or self.paused or request.origin != "peer" or self.peer_pending >= self.limit:
             return False
         packet, _, _ = decode_packet(request.raw)
         if not supported_peer_packet(packet):
@@ -117,11 +125,52 @@ class DaemonBinding:
             self.daemon.router.queue.put_nowait(packet)
         except asyncio.QueueFull:
             return False
+        self.peer_packets.add(id(packet))
         self.peer_pending += 1
         return True  # Queue admission, not modem TX or recipient ACK.
 
-    def peer_finished(self):
-        self.peer_pending = max(0, self.peer_pending - 1)
+    def peer_finished(self, packet=None):
+        if packet is not None:
+            self.peer_packets.discard(id(packet))
+        self.peer_pending = len(self.peer_packets)
+
+    def peer_guard(self, packet):
+        if self.closed or self.paused or id(packet) not in self.peer_packets:
+            return None
+        generation = self.generation
+        return lambda: not self.closed and not self.paused and self.generation == generation
+
+    async def pause(self):
+        # Fence queued/delayed RF copies before yielding to close network sessions.
+        self.paused = True
+        self.generation += 1
+        self.adapter.config = replace(self.adapter.config, enabled=False)
+        self.peer_packets.clear()
+        self.peer_pending = 0
+        tasks = tuple(self.tasks)
+        for task in tasks:
+            task.cancel()
+        try:
+            if self.service is not None:
+                await self.service.close()
+        finally:
+            if tasks:
+                await asyncio.gather(*tasks, return_exceptions=True)
+
+    async def resume(self, config, limit):
+        if self.closed:
+            raise ValueError("Internet Link has been closed")
+        if self.service is None:
+            raise ValueError("Internet Link transport is unavailable")
+        self.adapter.config = config
+        self.limit = limit
+        if self.paused:
+            try:
+                await self.service.start()
+            except BaseException:
+                self.adapter.config = replace(self.adapter.config, enabled=False)
+                raise
+        self.paused = False
 
     async def close(self):
         self.closed = True
