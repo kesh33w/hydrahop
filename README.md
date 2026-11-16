@@ -63,7 +63,7 @@ This hub contains the Python Internet Link sidecar, portable enrollment source, 
 
 Current hub development uses `kesh/openhop-bridge`. The TFT branch derives from MeshCore observer commit `d664d89df66bdacc1319900a2e2d152fa31b9dc9`.
 
-[components.current.json](components.current.json) pins the November 16, 2026 shared logical receiver and TX outcome source: Core `bf0caf2`, Repeater `30561a2`, with UI and firmware pins unchanged. See [multi-radio reconstruction](docs/quad-radio-reconstruction.md) for configuration requirements, validation and limits. Historical manifests remain unchanged. These source pins do not establish the full private configuration or assets installed on a Pi.
+[components.current.json](components.current.json) pins the November 16, 2026 shared logical receiver and TX outcome source: Core `bf0caf2`, Repeater `891336a`, with UI and firmware pins unchanged. See [multi-radio reconstruction](docs/quad-radio-reconstruction.md) for configuration requirements, validation and limits. Historical manifests remain unchanged. These source pins do not establish the full private configuration or assets installed on a Pi.
 
 [components.json](components.json) and the existing release manifests retain the original published release pins. Existing tags and release assets are preserved. See [branch history and clone-switching instructions](docs/branch-history.md) for current source revisions, the historical commit mapping, and the distinction between published source and deployment.
 

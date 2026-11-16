@@ -5,7 +5,7 @@
   },
   "openhop_repeater": {
     "url": "https://github.com/kesh33w/openhop_repeater.git",
-    "commit": "30561a24fd74e9d4925d76a6149083dc2fa87af2"
+    "commit": "891336a4e4a5c721de4e71f217306d5716806859"
   },
   "openhop_ui": {
     "url": "https://github.com/kesh33w/openHop_RepeaterUI.git",

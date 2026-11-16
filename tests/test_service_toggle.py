@@ -169,7 +169,8 @@ async def test_disabled_boot_preserves_peer_and_route_visibility_and_can_start()
         status = await inspect(api)
         assert status['enabled'] is False and status['running'] is False
         assert status['listener_port'] == 7443
-        assert status['peers'] == [{'id': 'remote', 'connected': False}]
+        assert status['peers'] == [{'id': 'remote', 'connected': False,
+                                    'last_valid_inbound_frame_age_seconds': None}]
         assert len(status['routes']) == 2
         with patch('private_link.daemon.install_from_config', AsyncMock(return_value='installed')) as install:
             result = await update(api, {'enabled': True})

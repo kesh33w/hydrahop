@@ -121,3 +121,13 @@ def test_real_http_endpoint_schedules_status_and_save_on_daemon_loop(config, tmp
     finally:
         endpoint.event_loop.call_soon_threadsafe(endpoint.event_loop.stop)
         thread.join(2); endpoint.event_loop.close()
+
+
+def test_inactive_peer_has_unknown_activity_without_enabling_service(config):
+    config["private_island"]["enabled"] = False
+    before = copy.deepcopy(config)
+    result = view(config, None)
+    assert result["peers"] == [{"id": "device-a", "connected": False,
+                                "last_valid_inbound_frame_age_seconds": None}]
+    assert result["enabled"] is False and result["running"] is False
+    assert config == before
