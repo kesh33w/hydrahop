@@ -1,5 +1,8 @@
 # Kesh's OpenHop bridge
 
+Latest change: per-radio CAD controls now also support authenticated remote CLI
+`get cad` and `set cad on|off RADIO_ID`. See [CAD control notes](docs/cad-control-2026-11-17.md).
+
 A personal OpenHop project for a Pi with two radios on different frequencies: keep local repeating and selectively translate channel messages to the other radio.
 
 The bridge authenticates and decrypts a selected group message with its source channel key, then re-encrypts it with the destination channel key. An optional **iLink (Internet Link)** connects the Pi to Kesh's MeshCore Observer-based V4.3 TFT, V4.3 OLED, and Heltec V3 OLED firmware.

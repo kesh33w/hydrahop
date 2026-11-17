@@ -7,7 +7,7 @@ preserves existing behavior. Explicit modes persist per physical radio and are
 restored on reconnect. Unsupported firmware returns an error, not a false success.
 
 Core: `20f0e237fe707e32517aae95c2de7721679e36ce`.
-Repeater: `681b134006fd94fa0e4202740f821ea8d0f688d0`.
+Repeater: `a94295effe1f78a10ae5cba5ccb89ba5f36de89b`.
 UI: `1168d519303e742224f9f09996cb38e86eab2ed9`.
 
 UI production build and mocked browser regression passed, covering no startup
@@ -23,3 +23,17 @@ Production backend files match published source. The live UI uses an isolated CA
 control asset to retain unrelated existing deployed bundles, and preserves the
 CAD page overflow fix. The same control is included in the UI source build.
 Historical manifests and firmware pins are unchanged.
+
+## Remote CLI follow-up
+
+The current repeater pin includes `get cad [RADIO_ID]` and
+`set cad on|off RADIO_ID` (`1|0` is also accepted). A set on a multi-radio bridge
+requires an explicit radio ID. It returns pending while the same serialized
+firmware-acknowledgement and persistence path used by the web UI completes;
+repeat `get cad` to inspect saved/error status.
+
+The CLI follow-up passed 87 focused CLI/CAD tests and a read-only check of the
+running authenticated CLI API. Phone RF transport was not independently tested.
+No live CAD mode was changed and no RF test traffic was sent. The repeater commit
+is published on `fix/cad-cli`; its default `kesh/bridge` branch remains at the
+prior web-control release. This manifest pins the exact deployed CLI commit.
