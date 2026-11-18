@@ -1,21 +1,20 @@
 """Automatic public enrollment on the existing TLS port; data still requires mTLS."""
 import asyncio
-from datetime import timezone
-import hashlib
 import json
 import os
-from pathlib import Path
 import ssl
 import tempfile
 import threading
+from pathlib import Path
 from types import SimpleNamespace
 
 import yaml
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from host_enrollment import enroll, validate_request
-from private_link.transport import TlsPeerService, PeerStream
+
 from private_link.daemon import _configuration
+from private_link.transport import PeerStream, TlsPeerService
 
 try:
     # openHop's own settings saves serialize the whole in-memory config under

@@ -10,7 +10,7 @@ import pytest
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "enrollment"))
-import enrollment_server  # noqa: E402
+import enrollment_server
 
 
 class _Cert:
