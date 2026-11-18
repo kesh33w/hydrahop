@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import ssl
 import tempfile
+import threading
 from types import SimpleNamespace
 
 import yaml
@@ -15,6 +16,14 @@ from cryptography.hazmat.primitives import hashes, serialization
 from host_enrollment import enroll, validate_request
 from private_link.transport import TlsPeerService, PeerStream
 from private_link.daemon import _configuration
+
+try:
+    # openHop's own settings saves serialize the whole in-memory config under
+    # this lock. Enrollment's read-modify-write must take it too, or a web UI
+    # save landing mid-enrollment can drop the new peer from config.yaml.
+    from repeater.config_manager import _CONFIG_WRITE_LOCK
+except ImportError:  # Standalone tools and tests without openHop installed.
+    _CONFIG_WRITE_LOCK = threading.RLock()
 
 
 class EnrollmentController:
@@ -28,33 +37,15 @@ class EnrollmentController:
     async def accept(self, request, service):
         _, origin = validate_request(request)
         async with self.lock:
-            current = yaml.safe_load(self.config_path.read_text())
-            approval, candidate, expires = enroll(request, current, self.ca, self.key,
-                self.state_dir / origin, days=365, no_expiration=True)
-            _, route_config, _ = _configuration(SimpleNamespace(config=candidate))
-            adapter = service.receiver.__self__
-            fingerprint = x509.load_pem_x509_certificate(
-                approval['certificate_pem'].encode()).fingerprint(hashes.SHA256()).hex()
+            # Runtime maps change only on this loop and only under self.lock,
+            # so this snapshot stays valid while the worker thread runs.
             existing = service.transports.get(origin)
-            if existing is not None and existing._fingerprint != fingerprint:
-                raise ValueError('Existing live identity conflict')
-            # Publish disk state before acknowledging; restart or retry recovers it.
-            if current != candidate:
-                fd, name = tempfile.mkstemp(prefix='.enroll-', dir=self.config_path.parent)
-                try:
-                    with os.fdopen(fd, 'w') as stream:
-                        yaml.safe_dump(candidate, stream, sort_keys=False)
-                        stream.flush()
-                        os.fsync(stream.fileno())
-                    os.replace(name, self.config_path)
-                    fd = os.open(self.config_path.parent, os.O_RDONLY)
-                    try:
-                        os.fsync(fd)
-                    finally:
-                        os.close(fd)
-                finally:
-                    if os.path.exists(name):
-                        os.unlink(name)
+            adapter = service.receiver.__self__
+            daemon = adapter.rf_planner.__self__.daemon
+            # Disk and shared-config work runs off the loop, so a slow fsync or
+            # a held config lock never stalls RF.
+            approval, candidate, expires, route_config, fingerprint = await asyncio.to_thread(
+                self._enroll_and_persist, request, origin, existing, daemon)
             # No await between map changes: the event loop sees complete routing.
             if existing is None:
                 existing = PeerStream(origin, fingerprint)
@@ -64,10 +55,56 @@ class EnrollmentController:
             adapter.transports[origin] = existing
             adapter._send_locks.setdefault(origin, asyncio.Lock())
             adapter.config = route_config
-            # CLI/config saves must retain enrollments admitted since startup.
-            adapter.rf_planner.__self__.daemon.config['private_island'] = candidate['private_island']
             return {**approval, 'expires_utc': expires.isoformat(),
                     'ca_expires_utc': self.ca.not_valid_after_utc.isoformat()}
+
+    def _enroll_and_persist(self, request, origin, existing, daemon):
+        """Worker thread: enroll against the saved config and publish it atomically.
+
+        Holds openHop's config write lock from reading config.yaml until the
+        in-memory section is updated, so no other settings save can interleave.
+        """
+        with _CONFIG_WRITE_LOCK:
+            current = yaml.safe_load(self.config_path.read_text())
+            approval, candidate, expires = enroll(request, current, self.ca, self.key,
+                self.state_dir / origin, days=365, no_expiration=True)
+            _, route_config, _ = _configuration(SimpleNamespace(config=candidate))
+            fingerprint = x509.load_pem_x509_certificate(
+                approval['certificate_pem'].encode()).fingerprint(hashes.SHA256()).hex()
+            if existing is not None and existing._fingerprint != fingerprint:
+                raise ValueError('Existing live identity conflict')
+            # Publish disk state before acknowledging; restart or retry recovers it.
+            if current != candidate:
+                self._write_config(candidate)
+            # CLI/config saves must retain enrollments admitted since startup.
+            daemon.config['private_island'] = candidate['private_island']
+            return approval, candidate, expires, route_config, fingerprint
+
+    def _write_config(self, candidate):
+        fd, name = tempfile.mkstemp(prefix='.enroll-', dir=self.config_path.parent)
+        try:
+            with os.fdopen(fd, 'w') as stream:
+                yaml.safe_dump(candidate, stream, sort_keys=False)
+                stream.flush()
+                os.fsync(stream.fileno())
+            # Keep config.yaml's owner and mode (repeater:repeater, 0600).
+            try:
+                info = os.stat(self.config_path)
+                os.chmod(name, info.st_mode & 0o7777)
+                os.chown(name, info.st_uid, info.st_gid)
+            except FileNotFoundError:
+                pass
+            except PermissionError:
+                pass  # Not root: the file is already owned by this service user.
+            os.replace(name, self.config_path)
+            fd = os.open(self.config_path.parent, os.O_RDONLY)
+            try:
+                os.fsync(fd)
+            finally:
+                os.close(fd)
+        finally:
+            if os.path.exists(name):
+                os.unlink(name)
 
 
 def unique_object(pairs):
