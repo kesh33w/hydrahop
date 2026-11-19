@@ -4,6 +4,13 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [kesh-2026.11.18.2] - 2026-11-19
+
+### Changed
+
+- **Pins** move to `kesh-2026.11.18.2`, which adds an Antenna identities setting (Bridge settings → Transmitters) to switch between a single identity and antenna codes.
+- **The upgrade guide** targets `kesh-2026.11.18.2`.
+
 ## [kesh-2026.11.18.1] - 2026-11-18
 
 ### Changed
@@ -29,6 +36,7 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
   - Enrollment now writes under `_CONFIG_WRITE_LOCK`, in a worker thread, so the radio loop never waits on the fsync.
   - The rewritten file keeps its owner and mode.
 
-[Unreleased]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18.1...kesh/openhop-bridge
+[Unreleased]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18.2...kesh/openhop-bridge
+[kesh-2026.11.18.2]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18.1...kesh-2026.11.18.2
 [kesh-2026.11.18.1]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18...kesh-2026.11.18.1
 [kesh-2026.11.18]: https://github.com/kesh33w/kesh-openhop-bridge/releases/tag/kesh-2026.11.18

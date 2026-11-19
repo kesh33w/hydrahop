@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (currently `kesh-2026.11.18.1`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `kesh-2026.11.18.2`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -15,7 +15,7 @@ Never copy files into an installed virtualenv. Every running file must come from
 | Backups | `/opt/openhop-production/backups/<label>-<UTC>/` |
 | Python | 3.13 (Debian) |
 
-**Check `web.web_path`.** On 18 Nov 2026 it pointed at `99cf1a2.bridge20261109/ui`, which Codex had overwritten on 17 Nov with an unmerged UI build (the Bridge control center and the Radio names editor). Release `kesh-2026.11.18.1` contains both, plus later features. All but two wordings of the live dashboard's text are present, and those two were reworded on purpose. So step 4, which points `web.web_path` at the release's bundled UI, removes nothing you currently see.
+**Check `web.web_path`.** On 18 Nov 2026 it pointed at `99cf1a2.bridge20261109/ui`, which Codex had overwritten on 17 Nov with an unmerged UI build (the Bridge control center and the Radio names editor). Releases from `kesh-2026.11.18.1` onward contain both, plus later features. All but two wordings of the live dashboard's text are present, and those two were reworded on purpose. So step 4, which points `web.web_path` at the release's bundled UI, removes nothing you currently see.
 
 Do not use `kesh-2026.11.18`: its UI lacks the control center and Radio names.
 
@@ -25,15 +25,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `kesh-2026.11.18.1` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.18.1` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.18.1` |
-| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.18.1` |
+| Core | `kesh33w/openhop_core` | `kesh-2026.11.18.2` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.18.2` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.18.2` |
+| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.18.2` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=kesh-2026.11.18.1
+TAG=kesh-2026.11.18.2
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
@@ -120,7 +120,9 @@ journalctl -u openhop-repeater -n 100 --no-pager | grep -E "ERROR|Traceback|TX i
 - The web UI loads, and **Bridge settings → Crossing diagnostics** shows the antenna identity table.
 - `GET /api/tx_groups` returns a `scope` for each network.
 - Traffic is being repeated on both networks: watch the dashboard for a few minutes.
-- Internet Link peers reconnect (Bridge settings → Internet Link).
+- Internet Link peers reconnect (Bridge settings → Internet Link), if it is enabled.
+- MQTT brokers do not log a line when they connect, and they connect in a staggered order over up to about 4 minutes. To check, count established connections: `sudo ss -tnp state established | grep "pid=$(systemctl show openhop-repeater -p MainPID --value)" | grep -c ":443"`.
+- "Plugin-manager bootstrap skipped: packaged service not found" is harmless. The check looks in `/opt/openhop_repeater/venv`, not the release directory, and the plugin-manager service is already installed.
 
 ## Roll back
 
