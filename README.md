@@ -9,6 +9,7 @@ The bridge authenticates and decrypts a selected group message with its source c
 | **Current release** | `kesh-2026.11.18`: core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
 | **Upgrade a Pi** | [docs/upgrade.md](docs/upgrade.md): a new release directory, switched by one drop-in, with rollback |
 | **What the fork changes** | [Repeater feature reference](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) · [Core changes](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [UI additions](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) |
+| **Predecessors** | `openhop-channel-bridge` (patch-series prototype), `openhop-bridge` (config kit and install records) and `meshcore-bridge` (the old G3 bridge) are archived and read-only. New work goes here and in the forks. |
 | **Working on it** | [Contributing](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/CONTRIBUTING.md) (covers all four repositories) · [Security](SECURITY.md) |
 
 [How it works](#how-the-bridge-works) · [Source](#source) · [Build and test](#reconstruct-and-test) · [Firmware and verification](#firmware-and-verification) · [Branch history](docs/branch-history.md)

@@ -4,6 +4,10 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+### Changed
+
+- The upgrade guide lists `/opt/openhop-channel-bridge/` for removal, and the README names the archived predecessor repositories.
+
 ## [kesh-2026.11.18] - 2026-11-18
 
 ### Added

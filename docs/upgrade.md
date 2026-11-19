@@ -137,6 +137,7 @@ The new release directory can stay for diagnosis. Durable state (the echo ledger
 These are safe to remove once the new release is verified:
 
 - `/etc/systemd/system/openhop-repeater.service.d/native-bridge.conf` and `native-private-link.conf`. `zz-production.conf` overrides both.
+- `/opt/openhop-channel-bridge/`: releases of the archived channel-bridge prototype. Only the two drop-ins above refer to it, so remove it after them. First confirm nothing else does: `sudo grep -rl openhop-channel-bridge /etc/systemd /etc/openhop_repeater`.
 - `zzzz-rak-comparison-20261116.conf`. Its capture window ended on 16 Nov 2026.
 - `/etc/openhop_repeater/tx-experiment-identities.json`. These private keys were never used; antenna aliases need only public data.
 - Release directories older than the previous one, once you no longer need them for rollback.
