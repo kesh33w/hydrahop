@@ -80,7 +80,7 @@ These are opt-in, so the upgrade changes nothing until you set them:
 
 | Setting | Effect |
 |---|---|
-| `fabric.topology.tx_group_scopes: {bay: crossings}` | Only bridged packets use the SFO transmitter pair |
+| `fabric.topology.tx_group_scopes: {g3910: crossings}` | Only bridged packets use the SFO transmitter pair |
 | Antenna identities (`tx_identity_experiment`) | Switch Off, Transmitting antenna or Receiving + transmitting under **Bridge settings → Transmitters → Antenna identities**; it applies on restart. Production runs `rx_tx` since 19 Nov 2026. |
 | `fabric.tx_mode` | Topology now defaults to `sticky` when unset. Production sets it explicitly; check it is still what you want. |
 
