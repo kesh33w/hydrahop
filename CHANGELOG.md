@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-19
+
+### Fixed
+
+- **G3 receptions carry RSSI/SNR** (core): the TCP modem driver now passes each packet's own signal metrics. Before this, about a quarter of the MQTT observations on CoreScope had no RSSI or SNR.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.0.3`.
+
 ## [1.0.2] - 2026-11-19
 
 ### Fixed
