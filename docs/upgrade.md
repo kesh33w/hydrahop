@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (currently `kesh-2026.11.19`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `hydrahop-v1.0.0`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -26,15 +26,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `kesh-2026.11.19` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.19` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.19` |
-| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.19` |
+| Core | `kesh33w/openhop_core` | `hydrahop-v1.0.0` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.0.0` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.0.0` |
+| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.0.0` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=kesh-2026.11.19
+TAG=hydrahop-v1.0.0
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
@@ -57,7 +57,7 @@ sudo "$REL/venv/bin/pip" install pyyaml cherrypy paho-mqtt cherrypy-cors==1.7.0 
 
 # Internet Link sidecar and enrollment entry point from the hub.
 TMP=$(mktemp -d)
-git clone --depth 1 --branch "$TAG" https://github.com/kesh33w/kesh-openhop-bridge.git "$TMP/hub"
+git clone --depth 1 --branch "$TAG" https://github.com/kesh33w/hydrahop.git "$TMP/hub"
 sudo cp -a "$TMP/hub/private_link" "$TMP/hub/enrollment" "$REL/"
 sudo cp "$TMP/hub/components.current.json" "$REL/deployment-manifest.json"
 rm -rf "$TMP"
