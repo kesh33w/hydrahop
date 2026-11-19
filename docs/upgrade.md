@@ -9,15 +9,16 @@ Never copy files into an installed virtualenv. Every running file must come from
 | Item | Path |
 |---|---|
 | Releases | `/opt/openhop-production/releases/<repeater-sha>.<label>/` (each has `venv/`, `private_link/`, `enrollment/` and `deployment-manifest.json`) |
-| Active release | Chosen by the systemd drop-in `/etc/systemd/system/openhop-repeater.service.d/zz-production.conf` (`ExecStart` + `PYTHONPATH`) |
+| Active release | Chosen by two systemd drop-ins, one per service (`ExecStart` + `PYTHONPATH`):<br>`/etc/systemd/system/openhop-repeater.service.d/zz-production.conf`<br>`/etc/systemd/system/openhop-plugin-manager.service.d/production-runtime.conf` |
 | Served web UI | `web.web_path` in `/etc/openhop_repeater/config.yaml` |
 | Config | `/etc/openhop_repeater/config.yaml`, owned `repeater:repeater`, mode `0600` |
 | Backups | `/opt/openhop-production/backups/<label>-<UTC>/` |
+| Legacy install | `/opt/openhop_repeater/` is the original pre-release-directory install. Keep it: `waterfall-metadata.service` runs `packet_metadata.py` with its venv, and the plugin manager's start check uses its Python. |
 | Python | 3.13 (Debian) |
 
-**Check `web.web_path`.** On 18 Nov 2026 it pointed at `99cf1a2.bridge20261109/ui`, which Codex had overwritten on 17 Nov with an unmerged UI build (the Bridge control center and the Radio names editor). Releases from `kesh-2026.11.18.1` onward contain both, plus later features. All but two wordings of the live dashboard's text are present, and those two were reworded on purpose. So step 4, which points `web.web_path` at the release's bundled UI, removes nothing you currently see.
+**Check `web.web_path`.** It should point at the active release's bundled UI (step 4). If it points anywhere else, someone has served a UI build outside a release: compare its text with the new release's bundle before switching, so the upgrade doesn't silently remove a feature. This happened on 17 Nov 2026, when an unmerged UI build was served from an old release directory.
 
-Do not use `kesh-2026.11.18`: its UI lacks the control center and Radio names.
+Do not use `kesh-2026.11.18`: its UI lacks the Bridge control center and Radio names.
 
 ## Release pins
 
@@ -41,6 +42,7 @@ BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
 sudo mkdir -p "$BACKUP"
 sudo cp -a /etc/openhop_repeater/config.yaml "$BACKUP/"
 sudo cp -a /etc/systemd/system/openhop-repeater.service.d "$BACKUP/"
+sudo cp -a /etc/systemd/system/openhop-plugin-manager.service.d "$BACKUP/"
 sudo mkdir "$REL"            # fails if it already exists: never reuse a release directory
 ```
 
@@ -79,7 +81,7 @@ These are opt-in, so the upgrade changes nothing until you set them:
 | Setting | Effect |
 |---|---|
 | `fabric.topology.tx_group_scopes: {bay: crossings}` | Only bridged packets use the SFO transmitter pair |
-| `tx_identity_experiment.mode` | `rx_tx` is the default. It means our hop names both the receiving and the transmitting antenna. Set `tx` to keep the 18 Nov transmit-only behaviour for a first deploy. |
+| Antenna identities (`tx_identity_experiment`) | Switch Off, Transmitting antenna or Receiving + transmitting under **Bridge settings → Transmitters → Antenna identities**; it applies on restart. Production runs `rx_tx` since 19 Nov 2026. |
 | `fabric.tx_mode` | Topology now defaults to `sticky` when unset. Production sets it explicitly; check it is still what you want. |
 
 Edit `config.yaml` with an editor that keeps the owner and mode, or through the web UI after the upgrade. If a tool replaces the file, restore `repeater:repeater` ownership before restarting. A wrong owner stopped the service for a minute on 18 Nov.
@@ -95,7 +97,18 @@ Environment="PYTHONDONTWRITEBYTECODE=1"
 ExecStart=
 ExecStart=$REL/venv/bin/python $REL/enrollment/pi_enrollment_entry.py --config /etc/openhop_repeater/config.yaml --enrollment-ca-cert /etc/openhop_repeater/private-link/ca-cert.pem --enrollment-ca-key /etc/openhop_repeater/private-link/issuer-key.pem --enrollment-state-dir /var/lib/openhop_repeater/enrollment-requests --log-level INFO
 EOF
+
+sudo tee /etc/systemd/system/openhop-plugin-manager.service.d/production-runtime.conf >/dev/null <<EOF
+[Service]
+WorkingDirectory=/var/lib/openhop_repeater/production
+Environment="PYTHONPATH=$REL:$REL/enrollment"
+Environment="PYTHONDONTWRITEBYTECODE=1"
+ExecStart=
+ExecStart=$REL/venv/bin/python -m repeater.plugins --config /etc/openhop_repeater/config.yaml
+EOF
 ```
+
+Switch both drop-ins together. The plugin manager is a separate service: if only the repeater's drop-in changes, it keeps running the old release's code, and breaks when that release directory is deleted. Until 19 Nov 2026 it was still on a 5 Nov release for exactly this reason.
 
 Point `web.web_path` at the UI built into the release. With Python 3.13 the path is:
 
@@ -107,13 +120,14 @@ Then:
 
 ```sh
 sudo systemctl daemon-reload
-sudo systemctl restart openhop-repeater
+sudo systemctl restart openhop-repeater openhop-plugin-manager
 ```
 
 ## 5. Verify
 
 ```sh
-systemctl is-active openhop-repeater
+systemctl is-active openhop-repeater openhop-plugin-manager waterfall-metadata
+systemctl show openhop-plugin-manager -p ExecStart --value   # must name $REL
 journalctl -u openhop-repeater -n 100 --no-pager | grep -E "ERROR|Traceback|TX identity alias|Packet router registered"
 ```
 
@@ -126,22 +140,28 @@ journalctl -u openhop-repeater -n 100 --no-pager | grep -E "ERROR|Traceback|TX i
 
 ## Roll back
 
-Restore the previous drop-in and config, then restart:
+Restore the previous drop-ins and config, then restart:
 
 ```sh
 sudo cp -a "$BACKUP/openhop-repeater.service.d/zz-production.conf" /etc/systemd/system/openhop-repeater.service.d/
+sudo cp -a "$BACKUP/openhop-plugin-manager.service.d/production-runtime.conf" /etc/systemd/system/openhop-plugin-manager.service.d/
 sudo cp -a "$BACKUP/config.yaml" /etc/openhop_repeater/config.yaml
-sudo systemctl daemon-reload && sudo systemctl restart openhop-repeater
+sudo systemctl daemon-reload && sudo systemctl restart openhop-repeater openhop-plugin-manager
 ```
+
+Restoring `config.yaml` also puts `web.web_path` back on the previous release's UI.
 
 The new release directory can stay for diagnosis. Durable state (the echo ledger and enrollment records) is forward-compatible, so don't delete it.
 
 ## Housekeeping after a successful upgrade
 
-These are safe to remove once the new release is verified:
+Keep the active release and the previous one (for rollback). Once the new release has run well for a while, older release directories can go. Before deleting one, check nothing still uses it:
 
-- `/etc/systemd/system/openhop-repeater.service.d/native-bridge.conf` and `native-private-link.conf`. `zz-production.conf` overrides both.
-- `/opt/openhop-channel-bridge/`: releases of the archived channel-bridge prototype. Only the two drop-ins above refer to it, so remove it after them. First confirm nothing else does: `sudo grep -rl openhop-channel-bridge /etc/systemd /etc/openhop_repeater`.
-- `zzzz-rak-comparison-20261116.conf`. Its capture window ended on 16 Nov 2026.
-- `/etc/openhop_repeater/tx-experiment-identities.json`. These private keys were never used; antenna aliases need only public data.
-- Release directories older than the previous one, once you no longer need them for rollback.
+```sh
+OLD=/opt/openhop-production/releases/<old-release>
+sudo grep -rl "$OLD" /etc/systemd /etc/openhop_repeater
+```
+
+No output means it is safe to remove. Keep `/opt/openhop_repeater/` (see the table above).
+
+**19 Nov 2026 cleanup.** The release directories `08d976a…`, `61e5ffa…` and `99cf1a2…`, the archived prototype's `/opt/openhop-channel-bridge/`, the stale repeater drop-ins (`native-bridge.conf`, `native-private-link.conf`, `zzzz-rak-comparison-20261116.conf`) and the unused `/etc/openhop_repeater/tx-experiment-identities.json` were removed, and the plugin manager was moved to the active release. A copy of everything removed is in the directory named in `/opt/openhop-production/backups/.last-cleanup`.
