@@ -46,8 +46,11 @@ def stage_routes(config, origin, fingerprint):
     island = result['private_island']
     if not island.get('enabled') or island.get('node_id') == origin:
         raise ValueError('Private island must be enabled with a distinct host identity')
-    if 'host-rf' not in {r['id'] for r in result.get('radios', [])}:
-        raise ValueError('Required host-rf radio is missing')
+    # Enrolled devices reach the mesh through the node's home radio: the fabric's
+    # default radio (host-rf before radios were named by hardware and frequency).
+    local_radio = (result.get('fabric') or {}).get('default_radio') or 'host-rf'
+    if local_radio not in {r['id'] for r in result.get('radios', [])}:
+        raise ValueError(f'Required local radio {local_radio!r} is missing')
     peers = island['transport']['peer_fingerprints']
     previous = peers.get(origin)
     if previous is not None and previous != fingerprint:
@@ -56,7 +59,7 @@ def stage_routes(config, origin, fingerprint):
         raise ValueError('Peer capacity of 16 reached')
     if any(p != origin and fp == fingerprint for p, fp in peers.items()):
         raise ValueError('Certificate already belongs to another peer')
-    expected = {'peer': origin, 'radio': 'remote-rf', 'local_radio': 'host-rf'}
+    expected = {'peer': origin, 'radio': 'remote-rf', 'local_radio': local_radio}
     inbound = island.setdefault('inbound', [])
     existing = [r for r in inbound if r.get('peer') == origin]
     if existing and existing != [expected]:
@@ -66,9 +69,9 @@ def stage_routes(config, origin, fingerprint):
             raise ValueError('Inbound route capacity reached')
         inbound.append(expected)
     outbound = island.setdefault('outbound', {})
-    if any(r != 'host-rf' and origin in ids for r, ids in outbound.items()):
+    if any(r != local_radio and origin in ids for r, ids in outbound.items()):
         raise ValueError('Existing outbound route conflicts with enrollment template')
-    destinations = outbound.setdefault('host-rf', [])
+    destinations = outbound.setdefault(local_radio, [])
     if origin not in destinations:
         if len(destinations) >= 16:
             raise ValueError('Outbound peer capacity reached')
