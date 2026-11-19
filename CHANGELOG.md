@@ -4,6 +4,10 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+### Changed
+
+- **The project is named HydraHop**, an OpenHop fork. README title and NOTICE follow.
+
 ## [kesh-2026.11.19] - 2026-11-19
 
 ### Changed

@@ -1,4 +1,6 @@
-# Kesh's OpenHop bridge
+# HydraHop
+
+**HydraHop is Kesh's fork of [OpenHop](https://github.com/openhop-dev)**: one Pi, several radios, two networks.
 
 A personal OpenHop project for a Pi with two radios on different frequencies: keep local repeating and selectively translate channel messages to the other radio.
 
