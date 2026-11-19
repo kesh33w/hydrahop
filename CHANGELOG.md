@@ -4,6 +4,17 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+### Changed
+
+- **The upgrade guide** now switches the plugin manager's drop-in along with the repeater's, and backs up, verifies and rolls back both. Before this, upgrades left the plugin manager on an old release.
+- **The upgrade guide** records the 19 Nov 2026 Pi cleanup, replaces the one-off removal list with a general check before deleting a release, and explains why `/opt/openhop_repeater/` stays (waterfall-metadata uses its venv).
+- The Antenna identities row points at the web UI setting.
+
+### Fixed
+
+- **Reported version.** `enrollment/pi_enrollment_entry.py` overwrote the repeater and core versions with hardcoded `61e5ffa.ilinkui20261105` strings, so every release since 5 Nov 2026 reported itself as that build in the web UI, the update check and observer MQTT `software_version`. The override is removed; the installed package versions are reported.
+- A duplicate `### Changed` heading under `kesh-2026.11.18.1`.
+
 ## [kesh-2026.11.18.2] - 2026-11-19
 
 ### Changed
@@ -17,9 +28,6 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 - **Pins** move to `kesh-2026.11.18.1`. Its bundled web UI includes the Bridge control center and the Radio names editor, which the Pi has served unmerged since 2026-11-17. Upgrading to `kesh-2026.11.18` would have removed them.
 - **The upgrade guide** targets `kesh-2026.11.18.1` and explains why `web.web_path` is safe to repoint.
-
-### Changed
-
 - The upgrade guide lists `/opt/openhop-channel-bridge/` for removal, and the README names the archived predecessor repositories.
 
 ## [kesh-2026.11.18] - 2026-11-18
