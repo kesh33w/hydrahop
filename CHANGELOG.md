@@ -4,6 +4,10 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+### Fixed
+
+- **iLink enrollment** routes a new device through the configured home radio (`fabric.default_radio`) instead of a radio that had to be named `host-rf`. Renaming radios no longer breaks enrollment.
+
 ## [1.0.0] - 2026-11-19
 
 The first release under the HydraHop name.
