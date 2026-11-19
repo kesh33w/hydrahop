@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-19
+
+### Added
+
+- **Antenna alias names on maps** (repeater): every MQTT status message lists the antenna aliases with labels such as `BD6E g3910→rak910`. The SacMesh CoreScope fork names alias hops from it, for observers it trusts (`hopAliases` setting).
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.1.0`.
+
 ## [1.0.3] - 2026-11-19
 
 ### Fixed
