@@ -1,18 +1,18 @@
 {
   "openhop_core": {
     "url": "https://github.com/kesh33w/openhop_core.git",
-    "commit": "6d32a1f475aaa261e91bd55517201bb1a52c6ae4",
-    "tag": "kesh-2026.11.18"
+    "commit": "9017e7d5748c69efb42345e70f16600d1a6d4afa",
+    "tag": "kesh-2026.11.18.1"
   },
   "openhop_repeater": {
     "url": "https://github.com/kesh33w/openhop_repeater.git",
-    "commit": "58a3024af69522ce196dc05570cd4c4719385188",
-    "tag": "kesh-2026.11.18"
+    "commit": "3eed5a5f9c61879d54ee3ab6c5be596d5d894aa1",
+    "tag": "kesh-2026.11.18.1"
   },
   "openhop_ui": {
     "url": "https://github.com/kesh33w/openHop_RepeaterUI.git",
-    "commit": "f04a8f87c8392f1a1abd3e4a84905052915236a9",
-    "tag": "kesh-2026.11.18"
+    "commit": "8904d961675b028136913bf3eb07e03714f57a52",
+    "tag": "kesh-2026.11.18.1"
   },
   "openhop_modem": {
     "url": "https://github.com/kesh33w/openhop_modem.git",
