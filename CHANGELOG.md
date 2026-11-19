@@ -4,8 +4,15 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-19
+
+### Fixed
+
+- **MQTT observers report relayed copies** (repeater): each relay path of a packet is now its own observation, as with single-radio observer firmware. Before this, CoreScope showed about a third as many observations as a co-located Heltec observer.
+
 ### Changed
 
+- **Pins** move to `hydrahop-v1.0.2`.
 - **Docs:** examples and diagrams use the radio IDs `g3909` and `g3910` (formerly `host-rf` and `bay`), matching `rak909` and `rak910`.
 
 ## [1.0.1] - 2026-11-19
