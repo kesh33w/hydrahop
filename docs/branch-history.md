@@ -18,14 +18,14 @@ These are published source revisions observed during the audit. Later documentat
 
 | Repository | Active branch | Audited source commit |
 | --- | --- | --- |
-| kesh-openhop-bridge | `kesh/openhop-bridge` | [`662e7f45`](https://github.com/kesh33w/kesh-openhop-bridge/commit/662e7f459891a0e72a3c25bcb1a9f2b7d31eb9d9) |
+| hydrahop | `kesh/openhop-bridge` | [`662e7f45`](https://github.com/kesh33w/hydrahop/commit/662e7f459891a0e72a3c25bcb1a9f2b7d31eb9d9) |
 | openhop_core | `kesh/bridge` | [`8c825c3e`](https://github.com/kesh33w/openhop_core/commit/8c825c3e1ab72bd65b567d2c75c704b7f17babeb) |
 | openhop_repeater | `kesh/bridge` | [`93a91613`](https://github.com/kesh33w/openhop_repeater/commit/93a91613ff4035b7c879c095e1c2ef4478607646) |
 | openHop_RepeaterUI | `kesh/bridge` | [`befc3c16`](https://github.com/kesh33w/openHop_RepeaterUI/commit/befc3c168c2119d016329a2454b30494687593f6) |
 | openhop_modem | `kesh/heltec-bench` | [`f8d718be`](https://github.com/kesh33w/openhop_modem/commit/f8d718be2b7142f69ad3caec5e2fcab15fd0f898) |
 | MeshCore TFT | `kesh/v43-tft-ilink` | [`350f2569`](https://github.com/kesh33w/MeshCore/commit/350f2569bbc4f41b2ee93d8732f3af103075ffbf) |
 
-The later [local60 TFT release](https://github.com/kesh33w/kesh-openhop-bridge/releases/tag/sacmesh-v43-tft-20261106-local60) retains its own original source manifest and binary checksums. Its source provenance must not be replaced with the active branch's corrected-history commit. The [TFT guide](https://github.com/kesh33w/MeshCore/blob/350f2569bbc4f41b2ee93d8732f3af103075ffbf/OPENHOP-BRIDGE-TFT.md) describes the runtime changes carried into that branch.
+The later [local60 TFT release](https://github.com/kesh33w/hydrahop/releases/tag/sacmesh-v43-tft-20261106-local60) retains its own original source manifest and binary checksums. Its source provenance must not be replaced with the active branch's corrected-history commit. The [TFT guide](https://github.com/kesh33w/MeshCore/blob/350f2569bbc4f41b2ee93d8732f3af103075ffbf/OPENHOP-BRIDGE-TFT.md) describes the runtime changes carried into that branch.
 
 ### Published source and Pi deployment
 
@@ -41,11 +41,11 @@ The mapping below covers the recreated commits. Later documentation commits exis
 
 | Repository | Original commit | Corrected commit |
 | --- | --- | --- |
-| kesh-openhop-bridge | [`bc75a234`](https://github.com/kesh33w/kesh-openhop-bridge/commit/bc75a2343505923f0c2f6b4a9789b5bac83d9ff6) | [`54359c30`](https://github.com/kesh33w/kesh-openhop-bridge/commit/54359c3001a32eba7a2ba83144bb4a56060878ab) |
-| kesh-openhop-bridge | [`dd4001c3`](https://github.com/kesh33w/kesh-openhop-bridge/commit/dd4001c39e7506b901a9c8cb4238c07c81e064c6) | [`fa9e0f85`](https://github.com/kesh33w/kesh-openhop-bridge/commit/fa9e0f85491fa6e37c7c3f5db9abad7beaea0036) |
-| kesh-openhop-bridge | [`5ce2b328`](https://github.com/kesh33w/kesh-openhop-bridge/commit/5ce2b32829dbb56a1c7375c332848467a04d9065) | [`0c7100d8`](https://github.com/kesh33w/kesh-openhop-bridge/commit/0c7100d820c94d384f3817e82a868b932bb95f2e) |
-| kesh-openhop-bridge | [`e086c124`](https://github.com/kesh33w/kesh-openhop-bridge/commit/e086c1246e1ec45e1d77fbe7face8ec8b6710bb5) | [`55e743d3`](https://github.com/kesh33w/kesh-openhop-bridge/commit/55e743d3515a96dd4f42eb8957afb77a68db61cb) |
-| kesh-openhop-bridge | [`a01a069c`](https://github.com/kesh33w/kesh-openhop-bridge/commit/a01a069c97e2cb32e6778512bc137ac23170f3de) | [`db910446`](https://github.com/kesh33w/kesh-openhop-bridge/commit/db910446785b26e736a7f06eebb3e2b085a798ec) |
+| hydrahop | [`bc75a234`](https://github.com/kesh33w/hydrahop/commit/bc75a2343505923f0c2f6b4a9789b5bac83d9ff6) | [`54359c30`](https://github.com/kesh33w/hydrahop/commit/54359c3001a32eba7a2ba83144bb4a56060878ab) |
+| hydrahop | [`dd4001c3`](https://github.com/kesh33w/hydrahop/commit/dd4001c39e7506b901a9c8cb4238c07c81e064c6) | [`fa9e0f85`](https://github.com/kesh33w/hydrahop/commit/fa9e0f85491fa6e37c7c3f5db9abad7beaea0036) |
+| hydrahop | [`5ce2b328`](https://github.com/kesh33w/hydrahop/commit/5ce2b32829dbb56a1c7375c332848467a04d9065) | [`0c7100d8`](https://github.com/kesh33w/hydrahop/commit/0c7100d820c94d384f3817e82a868b932bb95f2e) |
+| hydrahop | [`e086c124`](https://github.com/kesh33w/hydrahop/commit/e086c1246e1ec45e1d77fbe7face8ec8b6710bb5) | [`55e743d3`](https://github.com/kesh33w/hydrahop/commit/55e743d3515a96dd4f42eb8957afb77a68db61cb) |
+| hydrahop | [`a01a069c`](https://github.com/kesh33w/hydrahop/commit/a01a069c97e2cb32e6778512bc137ac23170f3de) | [`db910446`](https://github.com/kesh33w/hydrahop/commit/db910446785b26e736a7f06eebb3e2b085a798ec) |
 | MeshCore | [`92297eb1`](https://github.com/kesh33w/MeshCore/commit/92297eb12bdd683fe559d05be7ff297243d24dba) | [`5495fe33`](https://github.com/kesh33w/MeshCore/commit/5495fe335fe0a2652979d58d4d0b5fa3a09f9878) |
 | MeshCore | [`85af7e59`](https://github.com/kesh33w/MeshCore/commit/85af7e596bde8e03b09e29f47cde40187972740e) | [`f0ca7773`](https://github.com/kesh33w/MeshCore/commit/f0ca77732019b8b125377f217c37351f0fe97457) |
 | MeshCore | [`3aa270d9`](https://github.com/kesh33w/MeshCore/commit/3aa270d953251272bb3317c0be669e05c3bac380) | [`804e330e`](https://github.com/kesh33w/MeshCore/commit/804e330ef0fc1f33d248b5349b1cae0180f9d2d8) |
@@ -69,7 +69,7 @@ Start with a clean working tree. Save unfinished work on a local branch or in a 
 In an existing hub clone, update the remote URL and fetch:
 
 ```sh
-	git remote set-url origin https://github.com/kesh33w/kesh-openhop-bridge.git
+	git remote set-url origin https://github.com/kesh33w/hydrahop.git
 	git fetch origin
 	git remote set-head origin -a
 	git switch --create kesh/openhop-bridge --track origin/kesh/openhop-bridge

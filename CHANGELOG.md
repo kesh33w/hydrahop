@@ -1,11 +1,19 @@
 # Changelog
 
-Changes to this hub: the Internet Link sidecar, enrollment, component pins and docs. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Coordinated releases are tagged `kesh-YYYY.MM.DD` across the core, repeater, web UI and hub repositories. Firmware releases keep their own tags.
+Changes to this hub: the Internet Link sidecar, enrollment, component pins and docs. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Coordinated releases are HydraHop versions (`MAJOR.MINOR.PATCH`), tagged `hydrahop-vX.Y.Z` across the core, repeater, web UI and hub repositories. Releases up to 19 Nov 2026 used date tags (`kesh-YYYY.MM.DD`). Firmware releases keep their own tags.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-19
+
+The first release under the HydraHop name.
+
 ### Changed
 
+- **The hub is renamed** from `kesh-openhop-bridge` to `hydrahop`. GitHub redirects the old address; links now use the new one.
+- **Versioning**: releases are now HydraHop semantic versions tagged `hydrahop-vX.Y.Z` across all four repositories. Date tags (`kesh-YYYY.MM.DD`) stay as history.
+- **Pins** move to `hydrahop-v1.0.0`: the observer label reads `💧🍴 OpenHop HydraHop v1.0.0`, and the Victron sensor no longer drops data waiting during a slow port open.
+- **The upgrade guide** targets `hydrahop-v1.0.0`.
 - **The project is named HydraHop**, an OpenHop fork. README title and NOTICE follow.
 
 ## [kesh-2026.11.19] - 2026-11-19

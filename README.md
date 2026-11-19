@@ -12,11 +12,11 @@ The bridge authenticates and decrypts a selected group message with its source c
 > - [openhop_repeater](https://github.com/kesh33w/openhop_repeater): the repeater and the bridge itself
 > - [openHop_RepeaterUI](https://github.com/kesh33w/openHop_RepeaterUI): the web dashboard
 >
-> **Questions, feedback and bug reports for any of the four go in [this repository's issues](https://github.com/kesh33w/kesh-openhop-bridge/issues).** Security problems: see [SECURITY.md](SECURITY.md). Want to run this yourself? There's no fresh-install guide yet, so open an issue and I'll help.
+> **Questions, feedback and bug reports for any of the four go in [this repository's issues](https://github.com/kesh33w/hydrahop/issues).** Security problems: see [SECURITY.md](SECURITY.md). Want to run this yourself? There's no fresh-install guide yet, so open an issue and I'll help.
 
 | | |
 |---|---|
-| **Current release** | `kesh-2026.11.19`: core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
+| **Current release** | **HydraHop 1.0.0** (`hydrahop-v1.0.0`): core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
 | **Upgrade a Pi** | [docs/upgrade.md](docs/upgrade.md): a new release directory, switched by two systemd drop-ins, with rollback |
 | **What the fork changes** | [Repeater feature reference](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) · [Core changes](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [UI additions](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) |
 | **Predecessors** | `openhop-channel-bridge` (patch-series prototype), `openhop-bridge` (config kit and install records) and `meshcore-bridge` (the old G3 bridge) are archived and read-only. New work goes here and in the forks. |
@@ -81,7 +81,7 @@ This hub contains the Python Internet Link sidecar, portable enrollment source, 
 
 Current hub development uses `kesh/openhop-bridge`. The TFT branch derives from MeshCore observer commit `d664d89df66bdacc1319900a2e2d152fa31b9dc9`.
 
-[components.current.json](components.current.json) pins release **kesh-2026.11.19**: core `3402687`, repeater `0f9737c` and web UI `b695f13`, each tagged `kesh-2026.11.19`. Firmware pins are unchanged. The [upgrade guide](docs/upgrade.md) installs exactly these commits. The earlier [CAD control release notes](docs/cad-control-2026-11-17.md) and [multi-radio reconstruction](docs/quad-radio-reconstruction.md) remain for history. These source pins do not include the private configuration or assets installed on a Pi.
+[components.current.json](components.current.json) pins **HydraHop 1.0.0**: core `6c87847`, repeater `ded7943` and web UI `4dc85c6`, each tagged `hydrahop-v1.0.0`. Firmware pins are unchanged. The [upgrade guide](docs/upgrade.md) installs exactly these commits. The earlier [CAD control release notes](docs/cad-control-2026-11-17.md) and [multi-radio reconstruction](docs/quad-radio-reconstruction.md) remain for history. These source pins do not include the private configuration or assets installed on a Pi.
 
 [components.json](components.json) and the existing release manifests retain the original published release pins. Existing tags and release assets are preserved. See [branch history and clone-switching instructions](docs/branch-history.md) for current source revisions, the historical commit mapping, and the distinction between published source and deployment.
 
@@ -124,9 +124,9 @@ The private link sidecar must be on the daemon's Python path. `enrollment/pi_enr
 
 ## Firmware and verification
 
-[Download releases](https://github.com/kesh33w/kesh-openhop-bridge/releases) for the hardware-specific merged images, checksums, and source manifests.
+[Download releases](https://github.com/kesh33w/hydrahop/releases) for the hardware-specific merged images, checksums, and source manifests.
 
-The [V4.3 OLED trial release](https://github.com/kesh33w/kesh-openhop-bridge/releases/tag/kesh-v43-oled-20261106) retains the local60 TFT repeater, observer, enrollment and iLink behavior with OLED hardware and phone setup. New installations default to two-byte paths, 60-minute local adverts and 47-hour flood adverts. It passed a complete build, exact-target preprocessing, 37 focused native tests and image/credential checks. No non-TFT device was flashed. OLED first boot, enrollment, RF delivery and recipient ACK remain unverified. The existing TFT releases and assets remain available.
+The [V4.3 OLED trial release](https://github.com/kesh33w/hydrahop/releases/tag/kesh-v43-oled-20261106) retains the local60 TFT repeater, observer, enrollment and iLink behavior with OLED hardware and phone setup. New installations default to two-byte paths, 60-minute local adverts and 47-hour flood adverts. It passed a complete build, exact-target preprocessing, 37 focused native tests and image/credential checks. No non-TFT device was flashed. OLED first boot, enrollment, RF delivery and recipient ACK remain unverified. The existing TFT releases and assets remain available.
 
 The current endpoint is a trial service hosted at sacmesh.org.
 
