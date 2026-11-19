@@ -4,6 +4,13 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [kesh-2026.11.18.1] - 2026-11-18
+
+### Changed
+
+- **Pins** move to `kesh-2026.11.18.1`. Its bundled web UI includes the Bridge control center and the Radio names editor, which the Pi has served unmerged since 2026-11-17. Upgrading to `kesh-2026.11.18` would have removed them.
+- **The upgrade guide** targets `kesh-2026.11.18.1` and explains why `web.web_path` is safe to repoint.
+
 ### Changed
 
 - The upgrade guide lists `/opt/openhop-channel-bridge/` for removal, and the README names the archived predecessor repositories.
@@ -22,5 +29,6 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
   - Enrollment now writes under `_CONFIG_WRITE_LOCK`, in a worker thread, so the radio loop never waits on the fsync.
   - The rewritten file keeps its owner and mode.
 
-[Unreleased]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18...kesh/openhop-bridge
+[Unreleased]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18.1...kesh/openhop-bridge
+[kesh-2026.11.18.1]: https://github.com/kesh33w/kesh-openhop-bridge/compare/kesh-2026.11.18...kesh-2026.11.18.1
 [kesh-2026.11.18]: https://github.com/kesh33w/kesh-openhop-bridge/releases/tag/kesh-2026.11.18

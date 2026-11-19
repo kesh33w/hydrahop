@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (for example `kesh-2026.11.18`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `kesh-2026.11.18.1`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -15,7 +15,9 @@ Never copy files into an installed virtualenv. Every running file must come from
 | Backups | `/opt/openhop-production/backups/<label>-<UTC>/` |
 | Python | 3.13 (Debian) |
 
-**Check `web.web_path`.** On 18 Nov 2026 it pointed at the UI of an older release (`99cf1a2.bridge20261109/ui`), so UI changes bundled after that release were not being served. Step 4 fixes this.
+**Check `web.web_path`.** On 18 Nov 2026 it pointed at `99cf1a2.bridge20261109/ui`, which Codex had overwritten on 17 Nov with an unmerged UI build (the Bridge control center and the Radio names editor). Release `kesh-2026.11.18.1` contains both, plus later features. All but two wordings of the live dashboard's text are present, and those two were reworded on purpose. So step 4, which points `web.web_path` at the release's bundled UI, removes nothing you currently see.
+
+Do not use `kesh-2026.11.18`: its UI lacks the control center and Radio names.
 
 ## Release pins
 
@@ -23,15 +25,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `kesh-2026.11.18` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.18` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.18` |
-| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.18` |
+| Core | `kesh33w/openhop_core` | `kesh-2026.11.18.1` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.18.1` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.18.1` |
+| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.18.1` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=kesh-2026.11.18
+TAG=kesh-2026.11.18.1
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
