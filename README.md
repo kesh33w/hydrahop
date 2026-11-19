@@ -4,10 +4,18 @@ A personal OpenHop project for a Pi with two radios on different frequencies: ke
 
 The bridge authenticates and decrypts a selected group message with its source channel key, then re-encrypts it with the destination channel key. An optional **iLink (Internet Link)** connects the Pi to Kesh's MeshCore Observer-based V4.3 TFT, V4.3 OLED, and Heltec V3 OLED firmware.
 
+> **Start here.** This hub is the project's front door: it explains how the bridge works, pins which versions go together, and holds the Pi upgrade guide. The code lives in three forks of upstream [OpenHop](https://github.com/openhop-dev):
+>
+> - [openhop_core](https://github.com/kesh33w/openhop_core): the MeshCore protocol library
+> - [openhop_repeater](https://github.com/kesh33w/openhop_repeater): the repeater and the bridge itself
+> - [openHop_RepeaterUI](https://github.com/kesh33w/openHop_RepeaterUI): the web dashboard
+>
+> **Questions, feedback and bug reports for any of the four go in [this repository's issues](https://github.com/kesh33w/kesh-openhop-bridge/issues).** Security problems: see [SECURITY.md](SECURITY.md). Want to run this yourself? There's no fresh-install guide yet, so open an issue and I'll help.
+
 | | |
 |---|---|
 | **Current release** | `kesh-2026.11.18.2`: core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
-| **Upgrade a Pi** | [docs/upgrade.md](docs/upgrade.md): a new release directory, switched by one drop-in, with rollback |
+| **Upgrade a Pi** | [docs/upgrade.md](docs/upgrade.md): a new release directory, switched by two systemd drop-ins, with rollback |
 | **What the fork changes** | [Repeater feature reference](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) · [Core changes](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [UI additions](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) |
 | **Predecessors** | `openhop-channel-bridge` (patch-series prototype), `openhop-bridge` (config kit and install records) and `meshcore-bridge` (the old G3 bridge) are archived and read-only. New work goes here and in the forks. |
 | **Working on it** | [Contributing](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/CONTRIBUTING.md) (covers all four repositories) · [Security](SECURITY.md) |

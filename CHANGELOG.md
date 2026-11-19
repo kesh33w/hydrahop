@@ -6,6 +6,7 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ### Changed
 
+- **README** opens with a "Start here" overview of the four repositories, and makes this repository's issues the single place for feedback on all of them.
 - **The upgrade guide** now switches the plugin manager's drop-in along with the repeater's, and backs up, verifies and rolls back both. Before this, upgrades left the plugin manager on an old release.
 - **The upgrade guide** records the 19 Nov 2026 Pi cleanup, replaces the one-off removal list with a general check before deleting a release, and explains why `/opt/openhop_repeater/` stays (waterfall-metadata uses its venv).
 - The Antenna identities row points at the web UI setting.
