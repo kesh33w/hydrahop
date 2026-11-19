@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (currently `kesh-2026.11.18.2`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `kesh-2026.11.19`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -26,15 +26,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `kesh-2026.11.18.2` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.18.2` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.18.2` |
-| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.18.2` |
+| Core | `kesh33w/openhop_core` | `kesh-2026.11.19` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `kesh-2026.11.19` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `kesh-2026.11.19` |
+| Internet Link sidecar and enrollment | `kesh33w/kesh-openhop-bridge` | `kesh-2026.11.19` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=kesh-2026.11.18.2
+TAG=kesh-2026.11.19
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP

@@ -4,8 +4,12 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [kesh-2026.11.19] - 2026-11-19
+
 ### Changed
 
+- **Pins** move to `kesh-2026.11.19`. No radio behaviour changes: this release fixes the reported version and the upgrade guide, and readies the repositories for outside readers.
+- **The upgrade guide** targets `kesh-2026.11.19`.
 - **README** opens with a "Start here" overview of the four repositories, and makes this repository's issues the single place for feedback on all of them.
 - **The upgrade guide** now switches the plugin manager's drop-in along with the repeater's, and backs up, verifies and rolls back both. Before this, upgrades left the plugin manager on an old release.
 - **The upgrade guide** records the 19 Nov 2026 Pi cleanup, replaces the one-off removal list with a general check before deleting a release, and explains why `/opt/openhop_repeater/` stays (waterfall-metadata uses its venv).
