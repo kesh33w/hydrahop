@@ -4,6 +4,10 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+### Changed
+
+- **Docs:** examples and diagrams use the radio IDs `g3909` and `g3910` (formerly `host-rf` and `bay`), matching `rak909` and `rak910`.
+
 ## [1.0.1] - 2026-11-19
 
 ### Fixed
