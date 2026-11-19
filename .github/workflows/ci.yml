@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [kesh/openhop-bridge]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.13 is what the Pi runs.
+        python-version: ["3.13"]
+    steps:
+      - name: Checkout hub
+        uses: actions/checkout@v4
+
+      - name: Checkout core
+        uses: actions/checkout@v4
+        with:
+          repository: kesh33w/openhop_core
+          ref: kesh/bridge
+          path: sources/openhop_core
+
+      - name: Checkout repeater
+        uses: actions/checkout@v4
+        with:
+          repository: kesh33w/openhop_repeater
+          ref: kesh/bridge
+          path: sources/openhop_repeater
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml cherrypy paho-mqtt cherrypy-cors==1.7.0 psutil pyserial pyjwt ws4py \
+            cryptography pynacl pycryptodome pytest pytest-asyncio pytest-timeout
+          python -m pip install --no-deps -e sources/openhop_core -e sources/openhop_repeater
+
+      - name: Tests
+        env:
+          PYTHONPATH: .:sources/openhop_core/src:sources/openhop_repeater:tools:private_link/tests:enrollment
+        run: python -m pytest -p bench_test_guard private_link/tests tests -q --timeout=30
