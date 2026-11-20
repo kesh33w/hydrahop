@@ -4,6 +4,22 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-20
+
+### Fixed
+
+- **Antenna and bridge statistics** (repeater and web UI), after an independent review:
+  - the antenna signal comparison uses the same radio frame only (same packet, same relay, within 1 s), leads with SNR and states how many frames it rests on; coverage still counts distinct packets;
+  - neighbours repeating packets this node bridged are left out of coverage and signal, and counted separately;
+  - each antenna shows whether the running topology sends on it, and "no data" / "not recorded" are no longer shown as zero;
+  - bridge antenna codes come from the bytes actually sent, not today's settings;
+  - a failed history read is reported as an error, not as an empty report.
+- **Reproducible installs:** the repeater pins core to an exact commit (including its `hardware` extra) instead of following core's branch.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.3.1`.
+
 ## [1.3.0] - 2026-11-20
 
 ### Added
