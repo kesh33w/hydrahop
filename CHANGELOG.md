@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-20
+
+### Added
+
+- **Antenna comparison** (repeater and web UI): a new **Analytics → Antennas** page shows, for each network, which antennas heard each packet and how many only one antenna caught, the signal difference between antennas, and per antenna the noise floor, corrupted packets, repeaters heard, sends and channel-busy waits. It reads stored history (`GET /api/antenna_stats`).
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.3.0`.
+
 ## [1.2.0] - 2026-11-20
 
 ### Added
