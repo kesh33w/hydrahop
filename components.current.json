@@ -1,18 +1,18 @@
 {
   "openhop_core": {
     "url": "https://github.com/kesh33w/openhop_core.git",
-    "commit": "1d578dcfe5f4ba02f07eace1cd5232a49d6d8b4b",
-    "tag": "hydrahop-v1.1.0"
+    "commit": "01252997134999b7888a18cedfd45b71038608b5",
+    "tag": "hydrahop-v1.2.0"
   },
   "openhop_repeater": {
     "url": "https://github.com/kesh33w/openhop_repeater.git",
-    "commit": "f04cacf3ed0eadfe409e75d28258074638de7569",
-    "tag": "hydrahop-v1.1.0"
+    "commit": "d57e0f920981ed46a04e9dac3eeee96f9e54d3cf",
+    "tag": "hydrahop-v1.2.0"
   },
   "openhop_ui": {
     "url": "https://github.com/kesh33w/openHop_RepeaterUI.git",
-    "commit": "563be76a786353bf489114b3cbb0ccec29bf1b7c",
-    "tag": "hydrahop-v1.1.0"
+    "commit": "cd0f8f35d406579f0933407b6e3fba06c694d41c",
+    "tag": "hydrahop-v1.2.0"
   },
   "openhop_modem": {
     "url": "https://github.com/kesh33w/openhop_modem.git",

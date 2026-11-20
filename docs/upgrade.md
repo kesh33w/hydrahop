@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (currently `hydrahop-v1.1.0`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `hydrahop-v1.2.0`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -26,15 +26,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `hydrahop-v1.1.0` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.1.0` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.1.0` |
-| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.1.0` |
+| Core | `kesh33w/openhop_core` | `hydrahop-v1.2.0` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.2.0` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.2.0` |
+| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.2.0` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=hydrahop-v1.1.0
+TAG=hydrahop-v1.2.0
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
@@ -132,6 +132,7 @@ journalctl -u openhop-repeater -n 100 --no-pager | grep -E "ERROR|Traceback|TX i
 ```
 
 - The web UI loads, and **Bridge settings → Crossing diagnostics** shows the antenna identity table.
+- **Analytics → Bridge** shows bridged packet counts for the last 24 hours (from 1.2.0).
 - `GET /api/tx_groups` returns a `scope` for each network.
 - Traffic is being repeated on both networks: watch the dashboard for a few minutes.
 - Internet Link peers reconnect (Bridge settings → Internet Link), if it is enabled.
