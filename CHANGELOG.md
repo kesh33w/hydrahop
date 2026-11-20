@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-20
+
+### Added
+
+- **Bridge statistics** (repeater and web UI): a new **Analytics → Bridge** page shows packets bridged each way between the two networks, local repeats, why heard packets were not sent, and sends per antenna pair with each pair's antenna code, over 1 h to 7 days. It reads the repeater's stored packet history (`GET /api/bridge_stats`), so it needs no new tracking and survives restarts.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.2.0`.
+
 ## [1.1.0] - 2026-11-19
 
 ### Added
