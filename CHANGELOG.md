@@ -4,6 +4,20 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.3.3] - 2026-11-20
+
+### Added
+
+- **Pause between double-TX sends** (core and repeater). `fabric.topology.tx_group_gaps_ms`, e.g. `{g3909: [300, 1200]}`, waits a random time in that range (ms) before a TX group's second radio sends, instead of keying up the instant the first finishes, when neighbours are rebroadcasting the first copy. Off unless set; config file only.
+
+### Fixed
+
+- **Shadow radios could be configured as TX-group transmitters** (core and repeater). Shadow radios are receive-only: a TX group naming one is now refused at startup and at send time, and the web UI no longer offers one. `receiver` radios can still be the second transmitter.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.3.3`. The web UI is unchanged from 1.3.1 (same commit, tagged again).
+
 ## [1.3.2] - 2026-11-20
 
 ### Fixed
