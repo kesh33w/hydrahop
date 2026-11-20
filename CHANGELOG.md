@@ -4,6 +4,17 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-20
+
+### Added
+
+- **Which copy did neighbours relay?** (repeater and web UI). For packets a TX group sends through two radios, **Analytics → Antennas** and `GET /api/relay_stats` show how often neighbours relayed each radio's copy, split by whether it went first or second, and which neighbours relayed which copy. It reads the identity code each copy carried from the relays this node hears back, so it needs per-radio identity codes (`tx_identity_experiment` with `mode: tx`); copies on 1-byte paths or direct routes cannot be told apart and are counted separately.
+- **Random double-TX order** (core and repeater). `fabric.topology.tx_group_orders: {g3909: random}` shuffles which radio sends first for every send, so neither radio wins relays just by going first. Default `fixed`.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.4.0`.
+
 ## [1.3.3] - 2026-11-20
 
 ### Added
