@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-11-20
+
+### Fixed
+
+- **Double-TX radios showed zero transmit airtime** (repeater). Each leg of a TX group is now recorded against its own radio in `tx_radio_ids`, so the dashboard airtime chart, per-radio packet rates and MQTT `tx_radio_ids` count the group's second radio (e.g. `rak909`, `rak910`). Rows stored before the upgrade keep the old attribution.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.3.2`. Core and web UI are unchanged from 1.3.1 (same commits, tagged again).
+
 ## [1.3.1] - 2026-11-20
 
 ### Fixed
