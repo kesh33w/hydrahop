@@ -16,7 +16,7 @@ The bridge authenticates and decrypts a selected group message with its source c
 
 | | |
 |---|---|
-| **Current release** | **HydraHop 1.4.0** (`hydrahop-v1.4.0`): core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
+| **Current release** | **HydraHop 1.4.1** (`hydrahop-v1.4.1`): core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
 | **Upgrade a Pi** | [docs/upgrade.md](docs/upgrade.md): a new release directory, switched by two systemd drop-ins, with rollback |
 | **What the fork changes** | [Repeater feature reference](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) · [Core changes](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [UI additions](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) |
 | **Predecessors** | `openhop-channel-bridge` (patch-series prototype), `openhop-bridge` (config kit and install records) and `meshcore-bridge` (the old G3 bridge) are archived and read-only. New work goes here and in the forks. |
@@ -81,7 +81,7 @@ This hub contains the Python Internet Link sidecar, portable enrollment source, 
 
 Current hub development uses `kesh/openhop-bridge`. The TFT branch derives from MeshCore observer commit `d664d89df66bdacc1319900a2e2d152fa31b9dc9`.
 
-[components.current.json](components.current.json) pins **HydraHop 1.4.0**: core `63bad05`, repeater `bb0f516` and web UI `131f94e`, each tagged `hydrahop-v1.4.0`. Firmware pins are unchanged. The [upgrade guide](docs/upgrade.md) installs exactly these commits. The earlier [CAD control release notes](docs/cad-control-2026-11-17.md) and [multi-radio reconstruction](docs/quad-radio-reconstruction.md) remain for history. These source pins do not include the private configuration or assets installed on a Pi.
+[components.current.json](components.current.json) pins **HydraHop 1.4.1**: core `63bad05`, repeater `f3fb0c6` and web UI `131f94e`, each tagged `hydrahop-v1.4.1`. Firmware pins are unchanged. The [upgrade guide](docs/upgrade.md) installs exactly these commits. The earlier [CAD control release notes](docs/cad-control-2026-11-17.md) and [multi-radio reconstruction](docs/quad-radio-reconstruction.md) remain for history. These source pins do not include the private configuration or assets installed on a Pi.
 
 [components.json](components.json) and the existing release manifests retain the original published release pins. Existing tags and release assets are preserved. See [branch history and clone-switching instructions](docs/branch-history.md) for current source revisions, the historical commit mapping, and the distinction between published source and deployment.
 
