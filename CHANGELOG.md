@@ -4,13 +4,20 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-11-21
+
+### Changed
+
+- **HydraHop marker is a fork icon** (web UI). Menu items and the Dashboard card heading used the letters "HH", which are a hate symbol; they now show a small fork icon with the tooltip "HydraHop feature".
+- **Pins** move to `hydrahop-v1.5.1`. Core is unchanged from 1.4.0 (same commit, tagged again).
+
 ## [1.5.0] - 2026-11-21
 
 ### Added
 
 - **HydraHop status on the Dashboard** (web UI). One card shows, per network, bridged and repeated packets, each antenna's identity codes, which antenna's copy neighbours relay more when sent first, and Internet Link peers.
 - **Retired one-byte codes are shown** (web UI and repeater). The Dashboard, Analytics → Antennas and Crossing diagnostics name the radio, the code and the relay that caused it; the API gives `retired_reasons`.
-- **HydraHop features are marked in the menu** (web UI): an HH badge on Bridge, Antennas, Bridge settings and Radio Names, and a dot on pages changed in this release until opened.
+- **HydraHop features are marked in the menu** (web UI): a small HydraHop marker on Bridge, Antennas, Bridge settings and Radio Names, and a dot on pages changed in this release until opened.
 
 ### Changed
 
