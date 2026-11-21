@@ -4,6 +4,20 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-11-21
+
+### Added
+
+- **One-byte antenna identity codes** (repeater). `tx_identity_experiment.one_byte`, e.g. `{g3909: [d4, "14"], rak909: ["12", d3]}`, gives a transmitter a hand-picked 1-byte code (plus one for bridged hops), so 1-byte floods are tagged and **Analytics → Antennas** / `GET /api/relay_stats` can tell the copies apart. Pick bytes no relay on that radio's mesh uses. A code is retired as soon as a repeater or room advertising that byte is heard, live or in the last 30 days of stored adverts.
+
+### Fixed
+
+- **Relay stats could credit the wrong copy** (repeater) when an older hop in the path shared a code's bytes.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.4.1`. Core and web UI are unchanged from 1.4.0 (same commits, tagged again).
+
 ## [1.4.0] - 2026-11-20
 
 ### Added
