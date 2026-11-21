@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-11-21
+
+### Fixed
+
+- **One-byte codes were retired by relays far away** (repeater). Adverts reach the Pi from across the state, and 1.4.1 retired three of its four codes at startup over repeaters 5 to 9 hops away. Only a repeater or room heard within 2 hops now retires a code.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.4.2`. Core and web UI are unchanged from 1.4.0 (same commits, tagged again).
+
 ## [1.4.1] - 2026-11-21
 
 ### Added
