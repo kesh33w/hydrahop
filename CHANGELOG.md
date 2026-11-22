@@ -4,6 +4,13 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-22
+
+### Added
+
+- **CRC errors split by cause** (repeater, web UI). `/api/antenna_stats` estimates, per radio, the CRC errors that follow this node's own sends (CRC errors per send, their share, and the rate left over), and **Analytics → Antennas** shows both. On the Pi about half of all CRC errors follow our sends: most likely neighbours repeating what we just sent at the same moment, which loses nothing.
+- **Pins** move to `hydrahop-v1.6.0`. Core is unchanged (same commit, tagged again).
+
 ## [1.5.2] - 2026-11-22
 
 ### Changed

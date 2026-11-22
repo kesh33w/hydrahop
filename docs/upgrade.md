@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (currently `hydrahop-v1.5.2`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `hydrahop-v1.6.0`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -26,15 +26,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `hydrahop-v1.5.2` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.5.2` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.5.2` |
-| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.5.2` |
+| Core | `kesh33w/openhop_core` | `hydrahop-v1.6.0` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.6.0` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.6.0` |
+| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.6.0` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=hydrahop-v1.5.2
+TAG=hydrahop-v1.6.0
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
@@ -135,7 +135,7 @@ journalctl -u openhop-repeater -n 100 --no-pager | grep -E "ERROR|Traceback|TX i
 - **Analytics → Bridge** shows bridged packet counts for the last 24 hours (from 1.2.0).
 - **Analytics → Antennas** compares the antennas on each network (from 1.3.0). From 1.3.1 each antenna column says whether it sends ("receives and sends", "sends bridged packets only" or "receives only"), and the signal finding names how many matched frames it uses.
 - `GET /api/tx_groups` returns a `scope` for each network.
-- Traffic is being repeated on both networks: watch the dashboard for a few minutes. From 1.3.2 every radio in a TX group shows its own TX airtime on the dashboard (before, the group's second radio read zero). From 1.3.3 a TX group can pause between its two sends (`tx_group_gaps_ms`, off unless set); a config that lists a `shadow` radio in `tx_groups` no longer starts, so check that first. From 1.4.0 `tx_group_orders: {g3909: random}` shuffles which radio sends first, and with per-radio identity codes (`tx_identity_experiment.mode: tx`) **Analytics → Antennas** shows which copy neighbours relayed. From 1.4.1 `tx_identity_experiment.one_byte` tags 1-byte floods too; check the log for `One-byte TX code … retired` lines (from 1.4.2 only relays within 2 hops retire a code). From 1.5.0 the Dashboard has a HydraHop card, and a retired code shows there in red.
+- Traffic is being repeated on both networks: watch the dashboard for a few minutes. From 1.3.2 every radio in a TX group shows its own TX airtime on the dashboard (before, the group's second radio read zero). From 1.3.3 a TX group can pause between its two sends (`tx_group_gaps_ms`, off unless set); a config that lists a `shadow` radio in `tx_groups` no longer starts, so check that first. From 1.4.0 `tx_group_orders: {g3909: random}` shuffles which radio sends first, and with per-radio identity codes (`tx_identity_experiment.mode: tx`) **Analytics → Antennas** shows which copy neighbours relayed. From 1.4.1 `tx_identity_experiment.one_byte` tags 1-byte floods too; check the log for `One-byte TX code … retired` lines (from 1.4.2 only relays within 2 hops retire a code). From 1.5.0 the Dashboard has a HydraHop card, and a retired code shows there in red. From 1.6.0 **Analytics → Antennas** splits corrupted packets into an estimated share after our own sends and a rate from other causes (needs two hours of samples).
 - Internet Link peers reconnect (Bridge settings → Internet Link), if it is enabled.
 - MQTT brokers do not log a line when they connect, and they connect in a staggered order over up to about 4 minutes. To check, count established connections: `sudo ss -tnp state established | grep "pid=$(systemctl show openhop-repeater -p MainPID --value)" | grep -c ":443"`.
 - "Plugin-manager bootstrap skipped: packaged service not found" is harmless. The check looks in `/opt/openhop_repeater/venv`, not the release directory, and the plugin-manager service is already installed.
