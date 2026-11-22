@@ -4,6 +4,14 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.5.2] - 2026-11-22
+
+### Changed
+
+- **Quieter repeater logs** (repeater). Deliberate channel-bridge drops, discovery responses for companions with no app connected, oversized raw-RX log frames and a repeating update-check failure no longer log a warning each time: about 6,300 fewer warnings a day on the Pi.
+- **MQTT recovery is logged** (repeater). After a broker outage, the reconnect is logged at INFO instead of debug, so the log no longer looks stuck.
+- **Pins** move to `hydrahop-v1.5.2`. Core and web UI are unchanged (same commits, tagged again).
+
 ## [1.5.1] - 2026-11-21
 
 ### Changed

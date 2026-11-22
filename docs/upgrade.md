@@ -1,6 +1,6 @@
 # Upgrading the Pi to a release
 
-This guide installs a tagged release (currently `hydrahop-v1.5.1`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
+This guide installs a tagged release (currently `hydrahop-v1.5.2`) as a **new release directory** and switches the service to it. The previous release stays in place, so rollback is a one-line change.
 
 Never copy files into an installed virtualenv. Every running file must come from a tagged commit.
 
@@ -26,15 +26,15 @@ The exact commits for each release are in [`components.current.json`](../compone
 
 | Component | Repository | Tag |
 |---|---|---|
-| Core | `kesh33w/openhop_core` | `hydrahop-v1.5.1` |
-| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.5.1` |
-| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.5.1` |
-| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.5.1` |
+| Core | `kesh33w/openhop_core` | `hydrahop-v1.5.2` |
+| Repeater (includes the built web UI) | `kesh33w/openhop_repeater` | `hydrahop-v1.5.2` |
+| Web UI source | `kesh33w/openHop_RepeaterUI` | `hydrahop-v1.5.2` |
+| Internet Link sidecar and enrollment | `kesh33w/hydrahop` | `hydrahop-v1.5.2` |
 
 ## 1. Prepare (no service impact)
 
 ```sh
-TAG=hydrahop-v1.5.1
+TAG=hydrahop-v1.5.2
 REL=/opt/openhop-production/releases/$TAG
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 BACKUP=/opt/openhop-production/backups/$TAG-$STAMP
