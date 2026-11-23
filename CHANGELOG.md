@@ -4,6 +4,13 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-11-23
+
+### Fixed
+
+- **`agc.reset.interval` reaches the radios** (repeater). The CLI setting was saved but never sent to any modem. It is now pushed to G2/G3 modems over their HTTP API for each `modem_tcp` radio with a `modem_tcp.http_password_file`, rechecked every 10 minutes, and `get agc.reset.interval` shows each radio's actual value (`n/a` for USB modems, which have no AGC reset).
+- **Pins** move to `hydrahop-v1.6.1`. Core and web UI are unchanged (same commits, tagged again).
+
 ## [1.6.0] - 2026-11-22
 
 ### Added
