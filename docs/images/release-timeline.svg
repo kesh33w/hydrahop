@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 230" width="940" height="230" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">HydraHop release timeline</title>
+<desc id="d">1.0.0 (Nov 19): HydraHop name, semver; 1.0.2 (Nov 19): Every relay path observed; 1.0.3 (Nov 19): G3 RSSI/SNR per packet; 1.1.0 (Nov 19): Antenna alias labels; 1.2.0 (Nov 20): Analytics → Bridge; 1.3.0 (Nov 20): Analytics → Antennas; 1.3.3 (Nov 20): Double-TX random gap; 1.4.0 (Nov 20): Relay stats; 1.4.1 (Nov 21): 1-byte antenna codes; 1.5.0 (Nov 21): Dashboard card; 1.5.2 (Nov 22): 6,300 fewer warnings/day; 1.6.0 (Nov 22): CRC errors by cause; 1.6.1 (Nov 23): AGC interval to G3s</desc>
+<rect width="940" height="230" rx="12" fill="#0f172a"/>
+<text x="24" y="34" font-size="17" font-weight="700" fill="#f8fafc">18 releases in 5 days</text>
+<text x="916" y="34" font-size="12.5" fill="#94a3b8" text-anchor="end">selected HydraHop releases, Nov 19–23 2026</text>
+<line x1="80" y1="118" x2="860" y2="118" stroke="#475569" stroke-width="3"/>
+<circle cx="80" cy="118" r="7" fill="#7c3aed" stroke="#0f172a" stroke-width="2"/>
+<line x1="80" y1="110" x2="80" y2="102" stroke="#7c3aed" stroke-width="2"/>
+<text x="80" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.0.0</text>
+<text x="80" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">HydraHop name, semver</text>
+<circle cx="145" cy="118" r="7" fill="#7c3aed" stroke="#0f172a" stroke-width="2"/>
+<line x1="145" y1="126" x2="145" y2="134" stroke="#7c3aed" stroke-width="2"/>
+<text x="145" y="152" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.0.2</text>
+<text x="145" y="168" font-size="11" fill="#cbd5e1" text-anchor="middle">Every relay path observed</text>
+<circle cx="210" cy="118" r="7" fill="#7c3aed" stroke="#0f172a" stroke-width="2"/>
+<line x1="210" y1="110" x2="210" y2="102" stroke="#7c3aed" stroke-width="2"/>
+<text x="210" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.0.3</text>
+<text x="210" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">G3 RSSI/SNR per packet</text>
+<circle cx="275" cy="118" r="7" fill="#7c3aed" stroke="#0f172a" stroke-width="2"/>
+<line x1="275" y1="126" x2="275" y2="134" stroke="#7c3aed" stroke-width="2"/>
+<text x="275" y="152" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.1.0</text>
+<text x="275" y="168" font-size="11" fill="#cbd5e1" text-anchor="middle">Antenna alias labels</text>
+<circle cx="340" cy="118" r="7" fill="#2563eb" stroke="#0f172a" stroke-width="2"/>
+<line x1="340" y1="110" x2="340" y2="102" stroke="#2563eb" stroke-width="2"/>
+<text x="340" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.2.0</text>
+<text x="340" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">Analytics → Bridge</text>
+<circle cx="405" cy="118" r="7" fill="#2563eb" stroke="#0f172a" stroke-width="2"/>
+<line x1="405" y1="126" x2="405" y2="134" stroke="#2563eb" stroke-width="2"/>
+<text x="405" y="152" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.3.0</text>
+<text x="405" y="168" font-size="11" fill="#cbd5e1" text-anchor="middle">Analytics → Antennas</text>
+<circle cx="470" cy="118" r="7" fill="#2563eb" stroke="#0f172a" stroke-width="2"/>
+<line x1="470" y1="110" x2="470" y2="102" stroke="#2563eb" stroke-width="2"/>
+<text x="470" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.3.3</text>
+<text x="470" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">Double-TX random gap</text>
+<circle cx="535" cy="118" r="7" fill="#2563eb" stroke="#0f172a" stroke-width="2"/>
+<line x1="535" y1="126" x2="535" y2="134" stroke="#2563eb" stroke-width="2"/>
+<text x="535" y="152" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.4.0</text>
+<text x="535" y="168" font-size="11" fill="#cbd5e1" text-anchor="middle">Relay stats</text>
+<circle cx="600" cy="118" r="7" fill="#0891b2" stroke="#0f172a" stroke-width="2"/>
+<line x1="600" y1="110" x2="600" y2="102" stroke="#0891b2" stroke-width="2"/>
+<text x="600" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.4.1</text>
+<text x="600" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">1-byte antenna codes</text>
+<circle cx="665" cy="118" r="7" fill="#0891b2" stroke="#0f172a" stroke-width="2"/>
+<line x1="665" y1="126" x2="665" y2="134" stroke="#0891b2" stroke-width="2"/>
+<text x="665" y="152" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.5.0</text>
+<text x="665" y="168" font-size="11" fill="#cbd5e1" text-anchor="middle">Dashboard card</text>
+<circle cx="730" cy="118" r="7" fill="#16a34a" stroke="#0f172a" stroke-width="2"/>
+<line x1="730" y1="110" x2="730" y2="102" stroke="#16a34a" stroke-width="2"/>
+<text x="730" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.5.2</text>
+<text x="730" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">6,300 fewer warnings/day</text>
+<circle cx="795" cy="118" r="7" fill="#16a34a" stroke="#0f172a" stroke-width="2"/>
+<line x1="795" y1="126" x2="795" y2="134" stroke="#16a34a" stroke-width="2"/>
+<text x="795" y="152" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.6.0</text>
+<text x="795" y="168" font-size="11" fill="#cbd5e1" text-anchor="middle">CRC errors by cause</text>
+<circle cx="860" cy="118" r="7" fill="#ea580c" stroke="#0f172a" stroke-width="2"/>
+<line x1="860" y1="110" x2="860" y2="102" stroke="#ea580c" stroke-width="2"/>
+<text x="860" y="80" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">1.6.1</text>
+<text x="860" y="96" font-size="11" fill="#cbd5e1" text-anchor="middle">AGC interval to G3s</text>
+<circle cx="30" cy="208" r="5" fill="#7c3aed"/><text x="40" y="212" font-size="12" fill="#94a3b8">Nov 19</text>
+<circle cx="116" cy="208" r="5" fill="#2563eb"/><text x="126" y="212" font-size="12" fill="#94a3b8">Nov 20</text>
+<circle cx="202" cy="208" r="5" fill="#0891b2"/><text x="212" y="212" font-size="12" fill="#94a3b8">Nov 21</text>
+<circle cx="288" cy="208" r="5" fill="#16a34a"/><text x="298" y="212" font-size="12" fill="#94a3b8">Nov 22</text>
+<circle cx="374" cy="208" r="5" fill="#ea580c"/><text x="384" y="212" font-size="12" fill="#94a3b8">Nov 23</text>
+</svg>
