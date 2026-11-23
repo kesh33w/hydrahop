@@ -1,153 +1,99 @@
 # HydraHop
 
-**HydraHop is Kesh's fork of [OpenHop](https://github.com/openhop-dev)**: one Pi, several radios, two networks.
+**Kesh's fork of [OpenHop](https://github.com/openhop-dev): one Raspberry Pi, several radios, two MeshCore networks.**
 
-A personal OpenHop project for a Pi with two radios on different frequencies: keep local repeating and selectively translate channel messages to the other radio.
+[![Release](https://img.shields.io/github/v/release/kesh33w/hydrahop?label=release)](https://github.com/kesh33w/hydrahop/releases/latest) [![CI](https://github.com/kesh33w/hydrahop/actions/workflows/ci.yml/badge.svg?branch=kesh/openhop-bridge)](https://github.com/kesh33w/hydrahop/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![Issues](https://img.shields.io/github/issues/kesh33w/hydrahop)](https://github.com/kesh33w/hydrahop/issues)
 
-The bridge authenticates and decrypts a selected group message with its source channel key, then re-encrypts it with the destination channel key. An optional **iLink (Internet Link)** connects the Pi to Kesh's MeshCore Observer-based V4.3 TFT, V4.3 OLED, and Heltec V3 OLED firmware.
+HydraHop runs one OpenHop repeater across the Sacramento (909.875 MHz) and Bay (910.525 MHz) meshes. Each network keeps native local repeating. On top of that, HydraHop translates selected channels between the networks, sends through more than one antenna, tells antennas apart in relayed paths, and shows what happened on its own analytics pages.
 
-> **Start here.** This hub is the project's front door: it explains how the bridge works, pins which versions go together, and holds the Pi upgrade guide. The code lives in three forks of upstream [OpenHop](https://github.com/openhop-dev):
->
-> - [openhop_core](https://github.com/kesh33w/openhop_core): the MeshCore protocol library
-> - [openhop_repeater](https://github.com/kesh33w/openhop_repeater): the repeater and the bridge itself
-> - [openHop_RepeaterUI](https://github.com/kesh33w/openHop_RepeaterUI): the web dashboard
->
-> **Questions, feedback and bug reports for any of the four go in [this repository's issues](https://github.com/kesh33w/hydrahop/issues).** Security problems: see [SECURITY.md](SECURITY.md). Want to run this yourself? There's no fresh-install guide yet, so open an issue and I'll help.
+![System overview: one Raspberry Pi bridging two MeshCore networks, with HydraHop's additions in blue](docs/images/system-overview.svg)
 
 | | |
 |---|---|
-| **Current release** | **HydraHop 1.6.1** (`hydrahop-v1.6.1`): core, repeater, web UI and this hub, tagged together. Pins: [components.current.json](components.current.json). Notes: [CHANGELOG.md](CHANGELOG.md) |
-| **Upgrade a Pi** | [docs/upgrade.md](docs/upgrade.md): a new release directory, switched by two systemd drop-ins, with rollback |
-| **What the fork changes** | [Repeater feature reference](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) · [Core changes](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [UI additions](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) |
-| **Predecessors** | `openhop-channel-bridge` (patch-series prototype), `openhop-bridge` (config kit and install records) and `meshcore-bridge` (the old G3 bridge) are archived and read-only. New work goes here and in the forks. |
-| **Working on it** | [Contributing](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/CONTRIBUTING.md) (covers all four repositories) · [Security](SECURITY.md) |
+| **Current release** | **HydraHop 1.6.1** (`hydrahop-v1.6.1`, 2026-11-23). Core, repeater, web UI and this hub are tagged together. [Changelog](CHANGELOG.md) · [Pins](components.current.json) |
+| **Run it** | [Upgrade a Pi](docs/upgrade.md) (new release directory, one-line rollback) · [Build and test](docs/build-and-test.md) · No fresh-install guide yet: [open an issue](https://github.com/kesh33w/hydrahop/issues) and I'll help |
+| **Feature reference** | [Repeater](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) (every config key and default) · [Core](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [Web UI](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) · [Web API](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/bridge-api.md) |
+| **Feedback** | Questions and bugs for all four repositories go to [this hub's issues](https://github.com/kesh33w/hydrahop/issues). Security: [SECURITY.md](SECURITY.md) |
 
-[How it works](#how-the-bridge-works) · [Source](#source) · [Build and test](#reconstruct-and-test) · [Firmware and verification](#firmware-and-verification) · [Branch history](docs/branch-history.md)
+## What HydraHop adds to OpenHop
+
+![Feature map: channel bridge, multi-radio topology, double TX, antenna identities, analytics, radio control, observability, Internet Link and releases](docs/images/feature-map.svg)
+
+Every addition is opt-in. With none of HydraHop's configuration present, a single-radio node behaves like upstream OpenHop.
+
+| Area | Feature | What it does | Since |
+|---|---|---|---|
+| **Bridge** | [Channel translation](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md#channel-translation) | Decrypts an authorised channel on one network and re-encrypts it for a mapped channel on the other | pre-1.0 |
+| | [Protocol transit](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/bridge-protocol-routing.md) | DMs, ACKs, path discovery, repeater admin and TRACE cross on explicit routes, still encrypted | pre-1.0 |
+| | [Safeguards](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md#bridge-safeguards-and-live-pause) | Per-direction rate limits, bounded queues, a restart-safe echo ledger and a live **Pause crossings** switch | pre-1.0 |
+| | [Send policies](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md#per-send-policies) | Separate rules for local repeats and crossings, e.g. a bridge-only network | pre-1.0 |
+| **Radios** | [Network topology](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/logical-receivers.md) | Two logical networks, one transmitter each, plus receiver and shadow radios merged into one reception | pre-1.0 |
+| | [Double TX](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/ordered-dual-tx.md) | One packet sent through two antennas in turn, for every packet or bridged ones only; random gap (1.3.3) and order (1.4.0) | pre-1.0 |
+| | [Antenna identities](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/tx-identities.md) | Our hop in a relayed path names the antenna that heard or sent it; hand-picked 1-byte codes (1.4.1) retire themselves when a relay within 2 hops uses the byte | pre-1.0 |
+| | [CAD per radio](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/per-radio-cad.md) | Channel-activity detection on/off and calibration per radio, applied once firmware confirms | pre-1.0 |
+| | [AGC reset](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md#radio-control) | `agc.reset.interval` pushed to G2/G3 network modems and read back | 1.6.1 |
+| **Analytics** | Bridge page | Packets bridged each way, local repeats, why heard packets were not sent, sends per antenna pair | 1.2.0 |
+| | Antennas page | Which antennas heard each packet, signal gap, noise floor, CRC errors, repeaters heard, channel-busy waits | 1.3.0 |
+| | Relay attribution | Which antenna's copy neighbours relayed, split by send order | 1.4.0 |
+| | CRC by cause | Corrupted packets that follow our own sends versus other causes | 1.6.0 |
+| | Dashboard card | Per-network bridged and repeated counts, antenna codes, Internet Link peers | 1.5.0 |
+| **Observability** | [Per-radio MQTT observers](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/separate-observer-identities.md) | One observer per radio and network on CoreScope; every relay path is its own observation (1.0.2) with RSSI/SNR (1.0.3) and antenna labels (1.1.0) | pre-1.0 |
+| **Links** | [Internet Link (iLink)](docs/ilink.md) | TLS sidecar that connects the Pi to Heltec V4.3 TFT/OLED and V3 firmware for multibyte traffic | pre-1.0 |
+| **Reliability** | [Transmit outcomes](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) | Every send ends as confirmed, not sent (safe to retry) or uncertain (never retried); USB modem I/O on its own threads | pre-1.0 |
+
+**Fork size:** about 35,600 lines added across 249 files in core, repeater and web UI since their upstream bases, with 89 new test files.
+
+## Screenshots
+
+From the live Pi (node key blurred).
+
+![Dashboard with the HydraHop card: bridged and repeated packets per network, and each antenna's identity codes](docs/images/screenshots/dashboard.png)
+
+<table>
+<tr>
+<td width="50%"><img src="docs/images/screenshots/bridge.png" alt="Analytics → Bridge: packets bridged each way, bridged packets over time, and per-network heard, repeated and not-sent counts"></td>
+<td width="50%"><img src="docs/images/screenshots/antennas.png" alt="Analytics → Antennas: who heard each packet, findings about corrupted packets and signal, and a per-antenna comparison table"></td>
+</tr>
+<tr>
+<td align="center"><b>Analytics → Bridge</b>: what crossed each way, and why the rest didn't</td>
+<td align="center"><b>Analytics → Antennas</b>: what each antenna adds on its network</td>
+</tr>
+</table>
+
+## Release history
+
+![Timeline of selected HydraHop releases from 1.0.0 on 19 November to 1.6.1 on 23 November 2026](docs/images/release-timeline.svg)
+
+Semantic versions (`hydrahop-vX.Y.Z`) are tagged in all four repositories at once: PATCH for fixes, MINOR for features, MAJOR for changes that need manual steps. Full notes: [CHANGELOG.md](CHANGELOG.md). Older date tags (`kesh-YYYY.MM.DD`) remain as history.
 
 ## How the bridge works
 
-### Local repeating and selected channel translation
-
-Native OpenHop routing runs first. For eligible group traffic, the bridge can keep the original encrypted payload for a local repeat and create a separately encrypted copy for the other radio. Local and crossing policies are independent: dropping a crossing does not cancel an allowed local repeat, and dropping the local copy does not prevent an allowed crossing.
-
-The diagram shows one configured direction for supported group text. Each send goes through the native radio queues.
-
 ![Group text can repeat locally on radio A or cross a selected mapping through source-key decryption and destination-key re-encryption to radio B.](docs/bridge-routing.svg)
 
-Mappings are directional. Add a reverse mapping for replies. Translation accepts ordinary group text in flood packets; signed group subtypes, direct messages, and control traffic do not use this translation path.
+- **Native routing runs first.** Each network repeats its own traffic as upstream does. The bridge only adds a separate crossing copy where a mapping and the crossing policy allow it.
+- **Mappings are directional.** Add the reverse mapping for replies. Only ordinary group text in flood packets is translated; signed group subtypes, DMs and control traffic never take this path.
+- **Direct messages and ACKs** cross on separately enabled explicit-path routes without being decrypted. Flooded DMs and unknown reverse paths do not cross.
+- **Local and crossing sends are independent.** Dropping one never cancels the other. Each goes through the normal radio queues and airtime accounting.
+- **Channel keys are write-only**: the settings API never returns them. Echo suppression survives restarts.
 
 > [!IMPORTANT]
-> The bridge needs authorized keys for both channels and is a trusted plaintext boundary. Translation is not end-to-end encryption across distinct channel keys. Channel authentication does not establish an individual sender's identity.
+> The bridge needs authorised keys for both channels and is a trusted plaintext boundary. Translation is not end-to-end encryption across distinct channel keys, and channel authentication does not prove which member sent a message.
 
-### Direct messages and acknowledgements
+## Repositories
 
-Separately enabled routes forward eligible explicit-path direct messages and acknowledgements between radios without decrypting their contents. These routes select the outgoing radio; they do not use the group-message decrypt/re-encrypt path. Endpoints need known forward and reverse contact paths. Flooded direct messages and unknown reverse-path discovery do not cross.
+| Repository | Branch | Role |
+|---|---|---|
+| **hydrahop** (this hub) | `kesh/openhop-bridge` | Release pins, upgrade guide, iLink sidecar, enrollment, integration tests, firmware releases |
+| [openhop_repeater](https://github.com/kesh33w/openhop_repeater) | `kesh/bridge` | The repeater daemon: bridge, topology, analytics APIs, built web UI |
+| [openhop_core](https://github.com/kesh33w/openhop_core) | `kesh/bridge` | MeshCore protocol library: multi-radio fabric, TX groups, radio drivers |
+| [openHop_RepeaterUI](https://github.com/kesh33w/openHop_RepeaterUI) | `kesh/bridge` | Web dashboard source |
+| [openhop_modem](https://github.com/kesh33w/openhop_modem/tree/kesh/heltec-bench) | `kesh/heltec-bench` | USB bench modem targets (Heltec T096, V4.3) |
+| [MeshCore iLink firmware](https://github.com/kesh33w/MeshCore/tree/kesh/v43-tft-ilink) | `kesh/v43-tft-ilink`, [`v43-oled-ilink`](https://github.com/kesh33w/MeshCore/tree/kesh/v43-oled-ilink), [`v3-oled-ilink`](https://github.com/kesh33w/MeshCore/tree/kesh/v3-oled-ilink) | iLink endpoints: [firmware releases and verification](docs/firmware.md) |
 
-### Optional iLink
+[components.current.json](components.current.json) pins **HydraHop 1.6.1**: core `63bad05`, repeater `2917218` and web UI `7e32e7b`. The [upgrade guide](docs/upgrade.md) installs exactly these commits. [components.json](components.json) and the release manifests keep the original published pins; see [branch history](docs/branch-history.md). Runtime keys, certificates, Wi-Fi passwords, live routes and enrollment records are installation inputs and are never committed.
 
-Kesh uses iLink as a temporary compatibility workaround for an older-firmware repeater. Kesh reports that the regional switch to two-byte paths left people behind that repeater cut off from multibyte traffic.
-
-The current implementation admits only eligible packets with two- or three-byte path hashes on approved iLink routes. One-byte traffic stays on normal RF. In this installation, that means continuing to rely on the existing older repeater for single-byte traffic. Multibyte traffic also retains normal RF forwarding under its own policy. This describes the intended topology, not automatic fallback selection or guaranteed delivery.
-
-The TLS Internet Link connects the Pi to MeshCore Observer-based Heltec V4.3 radios. The TFT build has touchscreen Wi-Fi setup. The standard OLED build uses a phone setup portal and USER-button recovery. Both generate their own identity and enrollment credentials during installation. Local RF startup remains independent of optional link failures.
-
-The TFT iLink firmware and the OpenHop USB bench modem are separate components. The USB bench targets support Heltec T096 and V4.3 hardware with restricted radio profiles and transmit power.
-
-## Controls and radio handling
-
-| Area | Implemented behavior |
-| --- | --- |
-| Bridge configuration | Channel mappings, direct-message routes, queue limits, and explicit origin and companion home radios. Validated changes require a restart. |
-| Channel keys | Write-only settings: stored keys are not returned by the settings API. |
-| Transmission | Native queues and airtime accounting, bounded queues and retries, and explicit handling of failed or uncertain transmissions. |
-| Echo suppression | Restart-safe reservations for original and translated packet hashes. |
-| Receive observations | Radio provenance is retained. |
-
-Internet Link peer status includes `last_valid_inbound_frame_age_seconds`, measured with a monotonic clock. It is `null` until a complete inbound frame passes validation. Its captured arrival time is recorded immediately after validation, before replay admission or RF planning can wait or fail. The age is retained across disconnects and reconnects, and resets when the service process restarts. Valid duplicates and frames rejected by downstream admission or RF planning still count as link activity. Neither connection status nor frame activity establishes RF transmission or recipient delivery.
-
-## Source
-
-This hub contains the Python Internet Link sidecar, portable enrollment source, and integration tests. It also provides reconstruction instructions and firmware releases.
-
-| Component | Active source | Role |
-| --- | --- | --- |
-| OpenHop Core | [kesh/bridge](https://github.com/kesh33w/openhop_core/tree/kesh/bridge) | Radio provenance and transmission outcomes |
-| OpenHop Repeater | [kesh/bridge](https://github.com/kesh33w/openhop_repeater/tree/kesh/bridge) | Native routing, channel translation, queues, and bridge settings |
-| Repeater UI | [kesh/bridge](https://github.com/kesh33w/openHop_RepeaterUI/tree/kesh/bridge) | Bridge configuration and Internet Link controls |
-| OpenHop Modem | [kesh/heltec-bench](https://github.com/kesh33w/openhop_modem/tree/kesh/heltec-bench) | Separate USB bench modem targets |
-| Heltec V3 OLED iLink firmware | [kesh/v3-oled-ilink](https://github.com/kesh33w/MeshCore/tree/kesh/v3-oled-ilink) | V3 OLED build, packaging source, and recorded hardware-check limits |
-| V4.3 OLED iLink firmware | [kesh/v43-oled-ilink](https://github.com/kesh33w/MeshCore/tree/kesh/v43-oled-ilink) | Standard V4.3 SSD1306 OLED endpoint with phone Wi-Fi setup and enrollment |
-| V4.3 TFT iLink firmware | [kesh/v43-tft-ilink](https://github.com/kesh33w/MeshCore/tree/kesh/v43-tft-ilink) | MeshCore Observer-based TFT endpoint with Wi-Fi setup and enrollment |
-
-Current hub development uses `kesh/openhop-bridge`. The TFT branch derives from MeshCore observer commit `d664d89df66bdacc1319900a2e2d152fa31b9dc9`.
-
-[components.current.json](components.current.json) pins **HydraHop 1.6.1**: core `63bad05`, repeater `2917218` and web UI `7e32e7b`, each tagged `hydrahop-v1.6.1`. Firmware pins are unchanged. The [upgrade guide](docs/upgrade.md) installs exactly these commits. The earlier [CAD control release notes](docs/cad-control-2026-11-17.md) and [multi-radio reconstruction](docs/quad-radio-reconstruction.md) remain for history. These source pins do not include the private configuration or assets installed on a Pi.
-
-[components.json](components.json) and the existing release manifests retain the original published release pins. Existing tags and release assets are preserved. See [branch history and clone-switching instructions](docs/branch-history.md) for current source revisions, the historical commit mapping, and the distinction between published source and deployment.
-
-Runtime keys, client certificates, Wi-Fi passwords, live routes, and enrollment records are installation inputs and are excluded from this repository.
-
-## Reconstruct and test
-
-### Backend
-
-Use Python 3.14 for the recorded environment. From a new checkout:
-
-```sh
-python3 tools/materialize.py --manifest components.current.json
-python3 -m venv .venv
-.venv/bin/pip install -r requirements-test.txt
-.venv/bin/pip install --no-deps -e sources/openhop_core -e sources/openhop_repeater
-PYTHONPATH=.:sources/openhop_core/src:sources/openhop_repeater:tools .venv/bin/python -m pytest -p bench_test_guard private_link/tests tests -q --timeout=10
-```
-
-Without `--manifest`, the materializer continues to use the historical `components.json`. For an original release reconstruction, check out that release's hub commit and use its original manifest. The tool refuses existing component destinations; use a separate clean checkout for a different snapshot.
-
-The tests use loopback sockets and simulated radios. They do not require credentials or connected hardware. An operating-system sandbox that blocks socket wakeups can prevent the threaded event-loop test from finishing.
-
-### Repeater UI
-
-Use Node 22 and the UI fork's package lock. In the UI checkout, run:
-
-```sh
-npm ci
-npm run type-check
-npm run test:unit -- --run --maxWorkers=2
-npm run build-only
-```
-
-### Firmware and enrollment
-
-For hardware-specific setup and builds, see the [V4.3 TFT guide](https://github.com/kesh33w/MeshCore/blob/kesh/v43-tft-ilink/OPENHOP-BRIDGE-TFT.md) or [V4.3 OLED guide](https://github.com/kesh33w/MeshCore/blob/kesh/v43-oled-ilink/OPENHOP-BRIDGE-OLED.md).
-
-The private link sidecar must be on the daemon's Python path. `enrollment/pi_enrollment_entry.py --check` checks imports without starting a service. Activation requires explicit configuration, CA, issuer-key, and state paths. Configure routes and trust deliberately before activation.
-
-## Firmware and verification
-
-[Download releases](https://github.com/kesh33w/hydrahop/releases) for the hardware-specific merged images, checksums, and source manifests.
-
-The [V4.3 OLED trial release](https://github.com/kesh33w/hydrahop/releases/tag/kesh-v43-oled-20261106) retains the local60 TFT repeater, observer, enrollment and iLink behavior with OLED hardware and phone setup. New installations default to two-byte paths, 60-minute local adverts and 47-hour flood adverts. It passed a complete build, exact-target preprocessing, 37 focused native tests and image/credential checks. No non-TFT device was flashed. OLED first boot, enrollment, RF delivery and recipient ACK remain unverified. The existing TFT releases and assets remain available.
-
-The current endpoint is a trial service hosted at sacmesh.org.
-
-> [!WARNING]
-> Flash a merged image at `0x0` with a full erase. This replaces existing firmware, identity, and settings. Browser USB flashing remains unverified.
-
-One encrypted recipient message and return ACK passed through the Pi and TFT. This bounded test does not establish endurance or field reliability.
-
-<details>
-<summary>Recorded test and build results</summary>
-
-| Scope | Recorded result |
-| --- | --- |
-| Final Internet Link implementation | 191 backend tests, 26 UI tests, type checking, and a production build passed. |
-| Fresh hub integration checks | 165 tests passed. |
-| Focused publication checks | 42 backend checks, 17 UI checks, type checking, and a production build passed. |
-
-These are recorded results from their respective validation runs, not a claim that every check ran against the current documentation commit. CI status is reported separately from local tests.
-
-</details>
+Predecessors `openhop-channel-bridge`, `openhop-bridge` and `meshcore-bridge` are archived and read-only. Contributing: see the repeater's [CONTRIBUTING.md](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/CONTRIBUTING.md), which covers all four repositories.
 
 ## Credits and hosting
 
-Kesh uses the sacmesh.org domain for this project. The [SACMesh website](https://sacmesh.org/firmware/) is managed separately. See [credits and licenses](NOTICE.md) for the OpenHop, MeshCore, and third-party acknowledgements.
+Kesh uses the sacmesh.org domain for this project. The [SACMesh website](https://sacmesh.org/firmware/) is managed separately. See [credits and licenses](NOTICE.md) for the OpenHop, MeshCore and third-party acknowledgements.

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 532" width="940" height="532" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">What HydraHop adds to OpenHop</title>
+<desc id="d">Channel bridge: Decrypts a mapped channel, re-encrypts it for the other network DM / ACK / PATH / TRACE cross unchanged Rate limits, echo ledger, live pause Local and crossing send policies; Multi-radio topology: Two logical networks on one Pi One transmitter per network, plus receiver and shadow radios Per-network duplicate suppression TX outcome: sent / not sent / uncertain; Double TX: TX groups: one packet, two antennas Every packet, or bridged ones only Random gap and random send order Airtime counted per antenna; Antenna identities: Per-antenna hop codes (2-byte) Hand-picked 1-byte codes, retired when a nearby relay uses the byte Alias labels in MQTT for CoreScope; Analytics: Bridge: crossings each way, why not sent Antennas: heard-by, signal gap, noise Which antenna&#x27;s copy neighbours relay CRC errors caused by our own sends; Radio control: Per-radio CAD on/off and calibration, applied after firmware confirms AGC reset interval pushed to G2/G3 Per-packet RSSI/SNR from G3 modems; Observability: One MQTT observer per radio/network Every relay path is an observation Dashboard card Last reception per radio; Internet Link (iLink): TLS sidecar to V4.3 TFT/OLED and Heltec V3 firmware Multibyte paths, approved routes only Enrollment via the home radio; Releases: Four repos tagged together (hydrahop-vX.Y.Z), exact pins Release directories, 1-line rollback Every change by PR with CI</desc>
+<rect width="940" height="532" rx="12" fill="#0f172a"/>
+<text x="24" y="38" font-size="19" font-weight="700" fill="#f8fafc">What HydraHop adds to OpenHop</text>
+<text x="916" y="38" font-size="12.5" fill="#94a3b8" text-anchor="end">all opt-in · single-radio config behaves like upstream</text>
+<rect x="24" y="64" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="24" y="64" width="5" height="132" rx="2" fill="#2563eb"/>
+<text x="42" y="90" font-size="15" font-weight="700" fill="#f8fafc">Channel bridge</text>
+<circle cx="45" cy="108" r="2.3" fill="#2563eb"/>
+<text x="54" y="112" font-size="12.5" fill="#cbd5e1">Decrypts a mapped channel, re-encrypts</text>
+<text x="54" y="129" font-size="12.5" fill="#cbd5e1">it for the other network</text>
+<circle cx="45" cy="142" r="2.3" fill="#2563eb"/>
+<text x="54" y="146" font-size="12.5" fill="#cbd5e1">DM / ACK / PATH / TRACE cross unchanged</text>
+<circle cx="45" cy="159" r="2.3" fill="#2563eb"/>
+<text x="54" y="163" font-size="12.5" fill="#cbd5e1">Rate limits, echo ledger, live pause</text>
+<circle cx="45" cy="176" r="2.3" fill="#2563eb"/>
+<text x="54" y="180" font-size="12.5" fill="#cbd5e1">Local and crossing send policies</text>
+<rect x="326" y="64" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="326" y="64" width="5" height="132" rx="2" fill="#7c3aed"/>
+<text x="344" y="90" font-size="15" font-weight="700" fill="#f8fafc">Multi-radio topology</text>
+<circle cx="347" cy="108" r="2.3" fill="#7c3aed"/>
+<text x="356" y="112" font-size="12.5" fill="#cbd5e1">Two logical networks on one Pi</text>
+<circle cx="347" cy="125" r="2.3" fill="#7c3aed"/>
+<text x="356" y="129" font-size="12.5" fill="#cbd5e1">One transmitter per network, plus</text>
+<text x="356" y="146" font-size="12.5" fill="#cbd5e1">receiver and shadow radios</text>
+<circle cx="347" cy="159" r="2.3" fill="#7c3aed"/>
+<text x="356" y="163" font-size="12.5" fill="#cbd5e1">Per-network duplicate suppression</text>
+<circle cx="347" cy="176" r="2.3" fill="#7c3aed"/>
+<text x="356" y="180" font-size="12.5" fill="#cbd5e1">TX outcome: sent / not sent / uncertain</text>
+<rect x="628" y="64" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="628" y="64" width="5" height="132" rx="2" fill="#db2777"/>
+<text x="646" y="90" font-size="15" font-weight="700" fill="#f8fafc">Double TX</text>
+<circle cx="649" cy="108" r="2.3" fill="#db2777"/>
+<text x="658" y="112" font-size="12.5" fill="#cbd5e1">TX groups: one packet, two antennas</text>
+<circle cx="649" cy="125" r="2.3" fill="#db2777"/>
+<text x="658" y="129" font-size="12.5" fill="#cbd5e1">Every packet, or bridged ones only</text>
+<circle cx="649" cy="142" r="2.3" fill="#db2777"/>
+<text x="658" y="146" font-size="12.5" fill="#cbd5e1">Random gap and random send order</text>
+<circle cx="649" cy="159" r="2.3" fill="#db2777"/>
+<text x="658" y="163" font-size="12.5" fill="#cbd5e1">Airtime counted per antenna</text>
+<rect x="24" y="210" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="24" y="210" width="5" height="132" rx="2" fill="#ea580c"/>
+<text x="42" y="236" font-size="15" font-weight="700" fill="#f8fafc">Antenna identities</text>
+<circle cx="45" cy="254" r="2.3" fill="#ea580c"/>
+<text x="54" y="258" font-size="12.5" fill="#cbd5e1">Per-antenna hop codes (2-byte)</text>
+<circle cx="45" cy="271" r="2.3" fill="#ea580c"/>
+<text x="54" y="275" font-size="12.5" fill="#cbd5e1">Hand-picked 1-byte codes, retired</text>
+<text x="54" y="292" font-size="12.5" fill="#cbd5e1">when a nearby relay uses the byte</text>
+<circle cx="45" cy="305" r="2.3" fill="#ea580c"/>
+<text x="54" y="309" font-size="12.5" fill="#cbd5e1">Alias labels in MQTT for CoreScope</text>
+<rect x="326" y="210" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="326" y="210" width="5" height="132" rx="2" fill="#0891b2"/>
+<text x="344" y="236" font-size="15" font-weight="700" fill="#f8fafc">Analytics</text>
+<circle cx="347" cy="254" r="2.3" fill="#0891b2"/>
+<text x="356" y="258" font-size="12.5" fill="#cbd5e1">Bridge: crossings each way, why not sent</text>
+<circle cx="347" cy="271" r="2.3" fill="#0891b2"/>
+<text x="356" y="275" font-size="12.5" fill="#cbd5e1">Antennas: heard-by, signal gap, noise</text>
+<circle cx="347" cy="288" r="2.3" fill="#0891b2"/>
+<text x="356" y="292" font-size="12.5" fill="#cbd5e1">Which antenna&#x27;s copy neighbours relay</text>
+<circle cx="347" cy="305" r="2.3" fill="#0891b2"/>
+<text x="356" y="309" font-size="12.5" fill="#cbd5e1">CRC errors caused by our own sends</text>
+<rect x="628" y="210" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="628" y="210" width="5" height="132" rx="2" fill="#16a34a"/>
+<text x="646" y="236" font-size="15" font-weight="700" fill="#f8fafc">Radio control</text>
+<circle cx="649" cy="254" r="2.3" fill="#16a34a"/>
+<text x="658" y="258" font-size="12.5" fill="#cbd5e1">Per-radio CAD on/off and calibration,</text>
+<text x="658" y="275" font-size="12.5" fill="#cbd5e1">applied after firmware confirms</text>
+<circle cx="649" cy="288" r="2.3" fill="#16a34a"/>
+<text x="658" y="292" font-size="12.5" fill="#cbd5e1">AGC reset interval pushed to G2/G3</text>
+<circle cx="649" cy="305" r="2.3" fill="#16a34a"/>
+<text x="658" y="309" font-size="12.5" fill="#cbd5e1">Per-packet RSSI/SNR from G3 modems</text>
+<rect x="24" y="356" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="24" y="356" width="5" height="132" rx="2" fill="#ca8a04"/>
+<text x="42" y="382" font-size="15" font-weight="700" fill="#f8fafc">Observability</text>
+<circle cx="45" cy="400" r="2.3" fill="#ca8a04"/>
+<text x="54" y="404" font-size="12.5" fill="#cbd5e1">One MQTT observer per radio/network</text>
+<circle cx="45" cy="417" r="2.3" fill="#ca8a04"/>
+<text x="54" y="421" font-size="12.5" fill="#cbd5e1">Every relay path is an observation</text>
+<circle cx="45" cy="434" r="2.3" fill="#ca8a04"/>
+<text x="54" y="438" font-size="12.5" fill="#cbd5e1">Dashboard card</text>
+<circle cx="45" cy="451" r="2.3" fill="#ca8a04"/>
+<text x="54" y="455" font-size="12.5" fill="#cbd5e1">Last reception per radio</text>
+<rect x="326" y="356" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="326" y="356" width="5" height="132" rx="2" fill="#4f46e5"/>
+<text x="344" y="382" font-size="15" font-weight="700" fill="#f8fafc">Internet Link (iLink)</text>
+<circle cx="347" cy="400" r="2.3" fill="#4f46e5"/>
+<text x="356" y="404" font-size="12.5" fill="#cbd5e1">TLS sidecar to V4.3 TFT/OLED and</text>
+<circle cx="347" cy="417" r="2.3" fill="#4f46e5"/>
+<text x="356" y="421" font-size="12.5" fill="#cbd5e1">Heltec V3 firmware</text>
+<circle cx="347" cy="434" r="2.3" fill="#4f46e5"/>
+<text x="356" y="438" font-size="12.5" fill="#cbd5e1">Multibyte paths, approved routes only</text>
+<circle cx="347" cy="451" r="2.3" fill="#4f46e5"/>
+<text x="356" y="455" font-size="12.5" fill="#cbd5e1">Enrollment via the home radio</text>
+<rect x="628" y="356" width="288" height="132" rx="9" fill="#1e293b" stroke="#334155"/>
+<rect x="628" y="356" width="5" height="132" rx="2" fill="#475569"/>
+<text x="646" y="382" font-size="15" font-weight="700" fill="#f8fafc">Releases</text>
+<circle cx="649" cy="400" r="2.3" fill="#475569"/>
+<text x="658" y="404" font-size="12.5" fill="#cbd5e1">Four repos tagged together</text>
+<circle cx="649" cy="417" r="2.3" fill="#475569"/>
+<text x="658" y="421" font-size="12.5" fill="#cbd5e1">(hydrahop-vX.Y.Z), exact pins</text>
+<circle cx="649" cy="434" r="2.3" fill="#475569"/>
+<text x="658" y="438" font-size="12.5" fill="#cbd5e1">Release directories, 1-line rollback</text>
+<circle cx="649" cy="451" r="2.3" fill="#475569"/>
+<text x="658" y="455" font-size="12.5" fill="#cbd5e1">Every change by PR with CI</text>
+<text x="24" y="520" font-size="12" fill="#94a3b8">Fork size vs upstream: ~35,600 lines added across 249 files in core, repeater and web UI, with 89 new test files.</text>
+</svg>
