@@ -4,8 +4,19 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-24
+
+### Added
+
+- **RF front-end controls for every radio** (upstream openHop PRs #561 and UI #132). AGC reset, FEM gain and RX boost can be read and set per radio in **Radio Hardware** and with `get|set … [radio_id]` in the CLI, not only on the default radio.
+
+### Fixed
+
+- **The node's own sends are no longer published to MQTT as receptions** (upstream openHop PR #490). They went out at RSSI 0 and zero hops, which maps read as a 0 dBm direct reception; about 100 a day on the Pi.
+
 ### Changed
 
+- **Pins** move to `hydrahop-v1.8.0`. Core is unchanged from 1.7.0 (`57022d8`, now also tagged `hydrahop-v1.8.0`).
 - **RAK USB receivers run openHop Modem v1.4.2** (stock upstream, updated over USB DFU from the Pi on 24 Nov 2026). All four production radios now take `repeater.agc_reset_interval` (8 s) at startup.
 
 ## [1.7.0] - 2026-11-24
@@ -253,7 +264,8 @@ The first release under the HydraHop name.
   - Enrollment now writes under `_CONFIG_WRITE_LOCK`, in a worker thread, so the radio loop never waits on the fsync.
   - The rewritten file keeps its owner and mode.
 
-[Unreleased]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.7.0...kesh/openhop-bridge
+[Unreleased]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.8.0...kesh/openhop-bridge
+[1.8.0]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.7.0...hydrahop-v1.8.0
 [1.7.0]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.6.1...hydrahop-v1.7.0
 [1.6.1]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.6.0...hydrahop-v1.6.1
 [1.6.0]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.5.2...hydrahop-v1.6.0
