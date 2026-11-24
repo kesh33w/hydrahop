@@ -4,6 +4,10 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+### Changed
+
+- **RAK USB receivers run openHop Modem v1.4.2** (stock upstream, updated over USB DFU from the Pi on 24 Nov 2026). All four production radios now take `repeater.agc_reset_interval` (8 s) at startup.
+
 ## [1.7.0] - 2026-11-24
 
 ### Added
