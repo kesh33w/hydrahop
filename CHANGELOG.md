@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-11-24
+
+### Fixed
+
+- **Companions no longer miss messages another receiver heard first** (repeater). A companion listening on one radio of a network (`receive_radio_ids: [g3910]`) lost every packet the network's other receiver (rak910) heard first, because the later identical copy is dropped as a duplicate. DMs, ACKs and login replies were affected; on 910 the RAK hears about 80% of direct messages first. `receive_radio_ids` now covers the whole network of each listed radio.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.8.1`: repeater `4ff6ab2`. Core (`57022d8`) and web UI (`96177d5`) are unchanged and also tagged `hydrahop-v1.8.1`.
+
 ## [1.8.0] - 2026-11-24
 
 ### Added
