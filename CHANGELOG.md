@@ -4,6 +4,17 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-24
+
+### Added
+
+- **Upstream OpenHop dev merged into core, repeater and web UI (7 Nov 2026).** Adds AGC reset, FEM gain and RX-boost control over the openHop Modem frame protocol (firmware v1.4.2 or later), `/api/radio_frontend`, CLI `radio.fem.*` and `radio.rxgain`, companion message history, and network and per-broker MQTT usage on System Stats. `repeater.agc_reset_interval` now reaches every modem whose firmware supports it, at startup and after each reconnect, without the G3 web password. Details in each repository's CHANGELOG.
+
+### Changed
+
+- **Production G3s run openHop Modem v1.4.2** (stock upstream, updated over the network on 24 Nov 2026), so g3909 and g3910 take the AGC interval from 1.7.0 on. The RAK USB receivers are still on their earlier firmware and report the control as unsupported.
+- **Pins** move to `hydrahop-v1.7.0`.
+
 ## [1.6.1] - 2026-11-23
 
 ### Fixed
@@ -238,7 +249,8 @@ The first release under the HydraHop name.
   - Enrollment now writes under `_CONFIG_WRITE_LOCK`, in a worker thread, so the radio loop never waits on the fsync.
   - The rewritten file keeps its owner and mode.
 
-[Unreleased]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.6.1...kesh/openhop-bridge
+[Unreleased]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.7.0...kesh/openhop-bridge
+[1.7.0]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.6.1...hydrahop-v1.7.0
 [1.6.1]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.6.0...hydrahop-v1.6.1
 [1.6.0]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.5.2...hydrahop-v1.6.0
 [1.5.2]: https://github.com/kesh33w/hydrahop/compare/hydrahop-v1.5.1...hydrahop-v1.5.2
