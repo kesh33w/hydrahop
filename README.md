@@ -10,7 +10,7 @@ HydraHop runs one OpenHop repeater across the Sacramento (909.875 MHz) and Bay (
 
 | | |
 |---|---|
-| **Current release** | **HydraHop 1.8.1** (`hydrahop-v1.8.1`, 2026-11-24). Core, repeater, web UI and this hub are tagged together. [Changelog](CHANGELOG.md) · [Pins](components.current.json) |
+| **Current release** | **HydraHop 1.9.0** (`hydrahop-v1.9.0`, 2026-11-25). Core, repeater, web UI and this hub are tagged together. [Changelog](CHANGELOG.md) · [Pins](components.current.json) |
 | **Run it** | [Upgrade a Pi](docs/upgrade.md) (new release directory, one-line rollback) · [Build and test](docs/build-and-test.md) · No fresh-install guide yet: [open an issue](https://github.com/kesh33w/hydrahop/issues) and I'll help |
 | **Feature reference** | [Repeater](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/README.md) (every config key and default) · [Core](https://github.com/kesh33w/openhop_core/blob/kesh/bridge/README.md#what-this-fork-changes) · [Web UI](https://github.com/kesh33w/openHop_RepeaterUI/blob/kesh/bridge/README.md#what-this-fork-adds) · [Web API](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/docs/fork/bridge-api.md) |
 | **Feedback** | Questions and bugs for all four repositories go to [this hub's issues](https://github.com/kesh33w/hydrahop/issues). Security: [SECURITY.md](SECURITY.md) |
@@ -90,7 +90,7 @@ Semantic versions (`hydrahop-vX.Y.Z`) are tagged in all four repositories at onc
 | [openhop_modem](https://github.com/kesh33w/openhop_modem/tree/kesh/heltec-bench) | `kesh/heltec-bench` | USB bench modem targets (Heltec T096, V4.3) |
 | [MeshCore iLink firmware](https://github.com/kesh33w/MeshCore/tree/kesh/v43-tft-ilink) | `kesh/v43-tft-ilink`, [`v43-oled-ilink`](https://github.com/kesh33w/MeshCore/tree/kesh/v43-oled-ilink), [`v3-oled-ilink`](https://github.com/kesh33w/MeshCore/tree/kesh/v3-oled-ilink) | iLink endpoints: [firmware releases and verification](docs/firmware.md) |
 
-[components.current.json](components.current.json) pins **HydraHop 1.8.1**: core `57022d8`, repeater `4ff6ab2` and web UI `96177d5`. The [upgrade guide](docs/upgrade.md) installs exactly these commits. [components.json](components.json) and the release manifests keep the original published pins; see [branch history](docs/branch-history.md). Runtime keys, certificates, Wi-Fi passwords, live routes and enrollment records are installation inputs and are never committed.
+[components.current.json](components.current.json) pins **HydraHop 1.9.0**: core `5550cf9`, repeater `cc86e0d` and web UI `96177d5`. The [upgrade guide](docs/upgrade.md) installs exactly these commits. [components.json](components.json) and the release manifests keep the original published pins; see [branch history](docs/branch-history.md). Runtime keys, certificates, Wi-Fi passwords, live routes and enrollment records are installation inputs and are never committed.
 
 Predecessors `openhop-channel-bridge`, `openhop-bridge` and `meshcore-bridge` are archived and read-only. Contributing: see the repeater's [CONTRIBUTING.md](https://github.com/kesh33w/openhop_repeater/blob/kesh/bridge/CONTRIBUTING.md), which covers all four repositories.
 
