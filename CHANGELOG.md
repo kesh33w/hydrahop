@@ -4,6 +4,20 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-11-25
+
+### Added
+
+- **The bridge can join more than two networks** (core, repeater). `fabric.topology.networks` may name three or more networks, each with its own TX radio and frequency, for example Sac 909, Bay 910 and a remote SoCal 927 G3 over `modem_tcp`. Channel-bridge `mappings` still decide what crosses and to which network. Two-network setups behave as before.
+
+### Fixed
+
+- **A channel mapped to two other networks reaches both** (repeater). The echo ledger refused the second translated copy of one source packet. Only affects three or more networks.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.9.0`: core `5550cf9`, repeater `cc86e0d`. The web UI (`96177d5`) is unchanged and also tagged `hydrahop-v1.9.0`.
+
 ## [1.8.1] - 2026-11-24
 
 ### Fixed
