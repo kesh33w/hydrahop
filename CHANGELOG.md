@@ -4,6 +4,16 @@ Changes to this hub: the Internet Link sidecar, enrollment, component pins and d
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-11-26
+
+### Added
+
+- **Observers can publish the node's own transmissions** (repeater). A broker with `publish_tx: true` also receives every successful send as an MC2MQTT packet with `direction: "tx"`, from the feed of the radio that sent it, with the bytes sent and no signal values. CoreScope keeps these out of reception statistics. Off by default.
+
+### Changed
+
+- **Pins** move to `hydrahop-v1.10.0`: repeater `5530eb6`. Core (`5550cf9`) and web UI (`96177d5`) are unchanged and also tagged `hydrahop-v1.10.0`.
+
 ## [1.9.0] - 2026-11-25
 
 ### Added
